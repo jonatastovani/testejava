@@ -17,7 +17,7 @@ public class UsuariosModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private boolean status;
+    private Boolean status;
 
     @Column(nullable = false, unique = true)
     private String usuario;
@@ -31,7 +31,7 @@ public class UsuariosModel {
     @Column(unique = true)
     private String apelido;
 
-    private int idExibicao;
+    private Long idExibicao;
 
     private String senha;
 
@@ -40,38 +40,36 @@ public class UsuariosModel {
     @Column(nullable = false, unique = true)
     private String cpf;
 
-    private Integer idTurno;
+    private Long idTurno;
 
-    private Integer idEscala;
+    private Long idEscala;
 
-    private boolean contaBloqueada;
+    private Boolean contaBloqueada;
 
     private LocalDateTime dataContaBloqueada;
 
-    private boolean contaExcluida;
+    private Boolean contaExcluida;
 
     private LocalDateTime dataContaExcluida;
 
-    private Integer idCadastro;
+    private Long idCadastro;
 
     private String ipCadastro;
 
     private LocalDateTime dataCadastro;
 
-    private Integer idAtualizacao;
+    private Long idAtualizacao;
 
     private String ipAtualizacao;
 
     private LocalDateTime dataAtualizacao;
 
-    private Integer idExclusoRegistro;
+    private Long idExclusoRegistro;
 
     private String ipExclusoRegistro;
 
     private LocalDateTime dataExclusoRegistro;
 
-    
-    
 	public Long getId() {
 		return id;
 	}
@@ -144,19 +142,19 @@ public class UsuariosModel {
 		this.cpf = cpf;
 	}
 
-	public Integer getIdTurno() {
+	public Long getIdTurno() {
 		return idTurno;
 	}
 
-	public void setIdTurno(Integer idTurno) {
+	public void setIdTurno(Long idTurno) {
 		this.idTurno = idTurno;
 	}
 
-	public Integer getIdEscala() {
+	public Long getIdEscala() {
 		return idEscala;
 	}
 
-	public void setIdEscala(Integer idEscala) {
+	public void setIdEscala(Long idEscala) {
 		this.idEscala = idEscala;
 	}
 
@@ -192,19 +190,19 @@ public class UsuariosModel {
 		this.dataContaExcluida = dataContaExcluida;
 	}
 
-	public int getNomeExibicao() {
+	public Long getNomeExibicao() {
 		return idExibicao;
 	}
 
-	public void setNomeExibicao(int nomeExibicao) {
+	public void setNomeExibicao(Long nomeExibicao) {
 		this.idExibicao = nomeExibicao;
 	}
 
-	public Integer getIdCadastro() {
+	public Long getIdCadastro() {
 		return idCadastro;
 	}
 
-	public void setIdCadastro(Integer idCadastro) {
+	public void setIdCadastro(Long idCadastro) {
 		this.idCadastro = idCadastro;
 	}
 
@@ -224,11 +222,11 @@ public class UsuariosModel {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public Integer getIdAtualizacao() {
+	public Long getIdAtualizacao() {
 		return idAtualizacao;
 	}
 
-	public void setIdAtualizacao(Integer idAtualizacao) {
+	public void setIdAtualizacao(Long idAtualizacao) {
 		this.idAtualizacao = idAtualizacao;
 	}
 
@@ -248,11 +246,11 @@ public class UsuariosModel {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
-	public Integer getIdExclusoRegistro() {
+	public Long getIdExclusoRegistro() {
 		return idExclusoRegistro;
 	}
 
-	public void setIdExclusoRegistro(Integer idExclusoRegistro) {
+	public void setIdExclusoRegistro(Long idExclusoRegistro) {
 		this.idExclusoRegistro = idExclusoRegistro;
 	}
 
