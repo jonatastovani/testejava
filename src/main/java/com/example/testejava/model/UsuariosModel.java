@@ -10,6 +10,8 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import org.hibernate.annotations.ColumnDefault;
+
 @Entity
 @Table(name = "tab_usuarios")
 public class UsuariosModel {
@@ -17,6 +19,8 @@ public class UsuariosModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    @ColumnDefault("true")
     private Boolean status;
 
     @Column(nullable = false, unique = true)
@@ -44,18 +48,24 @@ public class UsuariosModel {
 
     private Long idEscala;
 
+    @Column(nullable = false)
+    @ColumnDefault("false")
     private Boolean contaBloqueada;
 
     private LocalDateTime dataContaBloqueada;
 
+    @Column(nullable = false)
+    @ColumnDefault("false")
     private Boolean contaExcluida;
 
     private LocalDateTime dataContaExcluida;
 
+    @Column(nullable = false)
     private Long idCadastro;
 
     private String ipCadastro;
 
+    @Column(nullable = false)
     private LocalDateTime dataCadastro;
 
     private Long idAtualizacao;

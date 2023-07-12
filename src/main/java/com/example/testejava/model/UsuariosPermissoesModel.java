@@ -1,7 +1,10 @@
 package com.example.testejava.model;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import org.hibernate.annotations.ColumnDefault;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,14 +16,34 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "cimic_artigos")
-public class CimicArtigosModel {
+@Table(name = "tab_usuariospermissoes")
+public class UsuariosPermissoesModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String nome;
+    @ManyToOne
+    @JoinColumn(name = "idUsuario", referencedColumnName = "id")
+    private UsuariosModel usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "idPermissao", referencedColumnName = "id")
+    private PermissoesModel permissao;
+
+    @ColumnDefault("false")
+    private Boolean temporario;
+
+    @ManyToOne
+    @JoinColumn(name = "idBoletimPermissao", referencedColumnName = "id")
+    private ChefiaBoletimModel boletimPermissao;
+
+    @ColumnDefault("false")
+    private Boolean substituto;
+
+    private Date dataInicio;
+
+    private Date dataTermino;
 
     @ManyToOne
     @JoinColumn(name = "idCadastro", referencedColumnName = "id")
@@ -58,12 +81,60 @@ public class CimicArtigosModel {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public UsuariosModel getUsuario() {
+		return usuario;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setUsuario(UsuariosModel usuario) {
+		this.usuario = usuario;
+	}
+
+	public PermissoesModel getPermissao() {
+		return permissao;
+	}
+
+	public void setPermissao(PermissoesModel permissao) {
+		this.permissao = permissao;
+	}
+
+	public Boolean getTemporario() {
+		return temporario;
+	}
+
+	public void setTemporario(Boolean temporario) {
+		this.temporario = temporario;
+	}
+
+	public ChefiaBoletimModel getBoletimPermissao() {
+		return boletimPermissao;
+	}
+
+	public void setBoletimPermissao(ChefiaBoletimModel boletimPermissao) {
+		this.boletimPermissao = boletimPermissao;
+	}
+
+	public Boolean getSubstituto() {
+		return substituto;
+	}
+
+	public void setSubstituto(Boolean substituto) {
+		this.substituto = substituto;
+	}
+
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Date getDataTermino() {
+		return dataTermino;
+	}
+
+	public void setDataTermino(Date dataTermino) {
+		this.dataTermino = dataTermino;
 	}
 
 	public UsuariosModel getCadastro() {
@@ -151,7 +222,7 @@ public class CimicArtigosModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CimicArtigosModel other = (CimicArtigosModel) obj;
+		UsuariosPermissoesModel other = (UsuariosPermissoesModel) obj;
 		return Objects.equals(id, other.id);
 	}
 

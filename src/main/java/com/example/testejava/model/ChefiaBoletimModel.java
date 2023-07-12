@@ -1,7 +1,10 @@
 package com.example.testejava.model;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import org.hibernate.annotations.ColumnDefault;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,14 +16,33 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "cimic_artigos")
-public class CimicArtigosModel {
+@Table(name = "chefia_boletim")
+public class ChefiaBoletimModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "NUMERO")
+    private Long numero;
+
+    @ColumnDefault("false")
+    private Boolean boletimDoDia;
+
+    @ManyToOne
+    @JoinColumn(name = "idTurno")
+    private TurnosModel turno;
+
+    @ManyToOne
+    @JoinColumn(name = "idDiretor")
+    private UsuariosPermissoesModel diretor;
+
     @Column(nullable = false)
-    private String nome;
+    private Date dataBoletim;
+
+    @ManyToOne
+    @JoinColumn(name = "idBoletimAnterior")
+    private ChefiaBoletimModel boletimAnterior;
 
     @ManyToOne
     @JoinColumn(name = "idCadastro", referencedColumnName = "id")
@@ -58,12 +80,52 @@ public class CimicArtigosModel {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public Long getNumero() {
+		return numero;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNumero(Long numero) {
+		this.numero = numero;
+	}
+
+	public Boolean getBoletimDoDia() {
+		return boletimDoDia;
+	}
+
+	public void setBoletimDoDia(Boolean boletimDoDia) {
+		this.boletimDoDia = boletimDoDia;
+	}
+
+	public TurnosModel getTurno() {
+		return turno;
+	}
+
+	public void setTurno(TurnosModel turno) {
+		this.turno = turno;
+	}
+
+	public UsuariosPermissoesModel getDiretor() {
+		return diretor;
+	}
+
+	public void setDiretor(UsuariosPermissoesModel diretor) {
+		this.diretor = diretor;
+	}
+
+	public Date getDataBoletim() {
+		return dataBoletim;
+	}
+
+	public void setDataBoletim(Date dataBoletim) {
+		this.dataBoletim = dataBoletim;
+	}
+
+	public ChefiaBoletimModel getBoletimAnterior() {
+		return boletimAnterior;
+	}
+
+	public void setBoletimAnterior(ChefiaBoletimModel boletimAnterior) {
+		this.boletimAnterior = boletimAnterior;
 	}
 
 	public UsuariosModel getCadastro() {
@@ -151,8 +213,9 @@ public class CimicArtigosModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CimicArtigosModel other = (CimicArtigosModel) obj;
+		ChefiaBoletimModel other = (ChefiaBoletimModel) obj;
 		return Objects.equals(id, other.id);
 	}
 
+    
 }

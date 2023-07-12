@@ -2,32 +2,43 @@ package com.example.testejava.model;
 
 import java.util.Objects;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tab_turnos")
 public class TurnosModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     private String nome;
 
     @Column(nullable = false)
-    private boolean periodoDiurno;
+    private Boolean periodoDiurno;
 
-    private Long idTurnoSeguinte;
+    @ManyToOne
+    @JoinColumn(name = "idTurnoSeguinte", referencedColumnName = "id")
+    private TurnosModel turnoSeguinte;
 
-    private Long idPermissao;
+    @ManyToOne
+    @JoinColumn(name = "idPermissao", referencedColumnName = "id")
+    private PermissoesModel permissao;
 
-    @Column(nullable = false, columnDefinition = "INT(11) DEFAULT 53")
-    private Long idDiretorCarceregem;
+    @ManyToOne
+    @JoinColumn(name = "idDiretorCarceregem", referencedColumnName = "ID")
+    @ColumnDefault("53")
+    private PermissoesModel diretorCarceregem;
 
 	public Long getId() {
 		return id;
@@ -45,36 +56,36 @@ public class TurnosModel {
 		this.nome = nome;
 	}
 
-	public boolean isPeriodoDiurno() {
+	public Boolean getPeriodoDiurno() {
 		return periodoDiurno;
 	}
 
-	public void setPeriodoDiurno(boolean periodoDiurno) {
+	public void setPeriodoDiurno(Boolean periodoDiurno) {
 		this.periodoDiurno = periodoDiurno;
 	}
 
-	public Long getIdTurnoSeguinte() {
-		return idTurnoSeguinte;
+	public TurnosModel getTurnoSeguinte() {
+		return turnoSeguinte;
 	}
 
-	public void setIdTurnoSeguinte(Long idTurnoSeguinte) {
-		this.idTurnoSeguinte = idTurnoSeguinte;
+	public void setTurnoSeguinte(TurnosModel turnoSeguinte) {
+		this.turnoSeguinte = turnoSeguinte;
 	}
 
-	public Long getIdPermissao() {
-		return idPermissao;
+	public PermissoesModel getPermissao() {
+		return permissao;
 	}
 
-	public void setIdPermissao(Long idPermissao) {
-		this.idPermissao = idPermissao;
+	public void setPermissao(PermissoesModel permissao) {
+		this.permissao = permissao;
 	}
 
-	public Long getIdDiretorCarceregem() {
-		return idDiretorCarceregem;
+	public PermissoesModel getDiretorCarceregem() {
+		return diretorCarceregem;
 	}
 
-	public void setIdDiretorCarceregem(Long idDiretorCarceregem) {
-		this.idDiretorCarceregem = idDiretorCarceregem;
+	public void setDiretorCarceregem(PermissoesModel diretorCarceregem) {
+		this.diretorCarceregem = diretorCarceregem;
 	}
 
 	@Override
@@ -93,5 +104,5 @@ public class TurnosModel {
 		TurnosModel other = (TurnosModel) obj;
 		return Objects.equals(id, other.id);
 	}
-
+	
 }
