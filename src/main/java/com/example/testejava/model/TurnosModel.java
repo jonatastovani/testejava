@@ -36,9 +36,9 @@ public class TurnosModel {
     private PermissoesModel permissao;
 
     @ManyToOne
-    @JoinColumn(name = "idDiretorCarceregem", referencedColumnName = "id")
+    @JoinColumn(name = "idDiretorCarceragem", referencedColumnName = "id")
     //@ColumnDefault("53")
-    private PermissoesModel diretorCarceregem;
+    private PermissoesModel diretorCarceragem;
 
 	public Long getId() {
 		return id;
@@ -68,7 +68,7 @@ public class TurnosModel {
 		return idTurnoSeguinte;
 	}
 
-	public void setTurnoSeguinte(Long idTurnoSeguinte) {
+	public void setIdTurnoSeguinte(Long idTurnoSeguinte) {
 		this.idTurnoSeguinte = idTurnoSeguinte;
 	}
 
@@ -80,12 +80,12 @@ public class TurnosModel {
 		this.permissao = permissao;
 	}
 
-	public PermissoesModel getDiretorCarceregem() {
-		return diretorCarceregem;
+	public PermissoesModel getDiretorCarceragem() {
+		return diretorCarceragem;
 	}
 
-	public void setDiretorCarceregem(PermissoesModel diretorCarceregem) {
-		this.diretorCarceregem = diretorCarceregem;
+	public void setDiretorCarceragem(PermissoesModel diretorCarceragem) {
+		this.diretorCarceragem = diretorCarceragem;
 	}
 
 	@Override
