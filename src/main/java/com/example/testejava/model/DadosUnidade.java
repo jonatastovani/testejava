@@ -1,12 +1,6 @@
-/**
- * 
- */
 package com.example.testejava.model;
 
-import java.time.LocalTime;
 import java.util.Objects;
-
-import org.hibernate.annotations.ColumnDefault;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,17 +22,17 @@ public class DadosUnidade {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	//@ManyToOne
-	//@JoinColumn(name = "idUnidade", referencedColumnName = "id", nullable = false)
-	//private UnidadesModel unidade;
+	@ManyToOne
+	@JoinColumn(name = "idUnidade", referencedColumnName = "id", nullable = false)
+	private UnidadesModel unidade;
 	
 	@Column(nullable = false)
 //	@ColumnDefault("06:00")
-	private LocalTime  horaPlantaoAsp;
+	private String  horaPlantaoAsp;
 	
 	@Column(nullable = false)
 //	@ColumnDefault("07:00")
-	private LocalTime  horaPlantaoAevp;
+	private String  horaPlantaoAevp;
 
 	public Long getId() {
 		return id;
@@ -47,28 +41,28 @@ public class DadosUnidade {
 	public void setId(Long id) {
 		this.id = id;
 	}
-//
-//	public UnidadesModel getUnidade() {
-//		return unidade;
-//	}
-//
-//	public void setUnidade(UnidadesModel unidade) {
-//		this.unidade = unidade;
-//	}
 
-	public LocalTime  getHoraPlantaoAsp() {
+	public UnidadesModel getUnidade() {
+		return unidade;
+	}
+
+	public void setUnidade(UnidadesModel unidade) {
+		this.unidade = unidade;
+	}
+
+	public String  getHoraPlantaoAsp() {
 		return horaPlantaoAsp;
 	}
 
-	public void setHoraPlantaoAsp(LocalTime  horaPlantaoAsp) {
+	public void setHoraPlantaoAsp(String  horaPlantaoAsp) {
 		this.horaPlantaoAsp = horaPlantaoAsp;
 	}
 
-	public LocalTime  getHoraPlantaoAevp() {
+	public String  getHoraPlantaoAevp() {
 		return horaPlantaoAevp;
 	}
 
-	public void setHoraPlantaoAevp(LocalTime  horaPlantaoAevp) {
+	public void setHoraPlantaoAevp(String  horaPlantaoAevp) {
 		this.horaPlantaoAevp = horaPlantaoAevp;
 	}
 

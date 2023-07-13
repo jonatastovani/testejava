@@ -27,17 +27,17 @@ public class TurnosModel {
     @Column(nullable = false)
     private Boolean periodoDiurno;
 
-    @ManyToOne
-    @JoinColumn(name = "idTurnoSeguinte", referencedColumnName = "id")
-    private TurnosModel turnoSeguinte;
+    //@ManyToOne
+    //@JoinColumn(name = "idTurnoSeguinte", referencedColumnName = "id")
+    private Long idTurnoSeguinte;
 
     @ManyToOne
     @JoinColumn(name = "idPermissao", referencedColumnName = "id")
     private PermissoesModel permissao;
 
     @ManyToOne
-    @JoinColumn(name = "idDiretorCarceregem", referencedColumnName = "ID")
-    @ColumnDefault("53")
+    @JoinColumn(name = "idDiretorCarceregem", referencedColumnName = "id")
+    //@ColumnDefault("53")
     private PermissoesModel diretorCarceregem;
 
 	public Long getId() {
@@ -64,12 +64,12 @@ public class TurnosModel {
 		this.periodoDiurno = periodoDiurno;
 	}
 
-	public TurnosModel getTurnoSeguinte() {
-		return turnoSeguinte;
+	public Long getIdTurnoSeguinte() {
+		return idTurnoSeguinte;
 	}
 
-	public void setTurnoSeguinte(TurnosModel turnoSeguinte) {
-		this.turnoSeguinte = turnoSeguinte;
+	public void setTurnoSeguinte(Long idTurnoSeguinte) {
+		this.idTurnoSeguinte = idTurnoSeguinte;
 	}
 
 	public PermissoesModel getPermissao() {

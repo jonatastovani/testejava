@@ -21,20 +21,20 @@ public class PermissoesModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String nome;
 
     @Column(nullable = false)
     private String descricao;
 
-    @ManyToOne
-    @JoinColumn(name = "idTurno", referencedColumnName = "id")
-    private TurnosModel turno;
+    //@ManyToOne(fetch = FetchType.EAGER)
+    //@JoinColumn(name = "idTurno", referencedColumnName = "id")
+    private Long idTurno;
 
     @Column(nullable = false)
     @ColumnDefault("false")
     private Boolean diretor;
 
-    @Column(nullable = false)
     private String nomeCompleto;
 
     @ManyToOne
@@ -75,12 +75,12 @@ public class PermissoesModel {
 		this.descricao = descricao;
 	}
 
-	public TurnosModel getTurno() {
-		return turno;
+	public Long getIdTurno() {
+		return idTurno;
 	}
 
-	public void setTurno(TurnosModel turno) {
-		this.turno = turno;
+	public void setIdTurno(Long idTurno) {
+		this.idTurno = idTurno;
 	}
 
 	public Boolean getDiretor() {

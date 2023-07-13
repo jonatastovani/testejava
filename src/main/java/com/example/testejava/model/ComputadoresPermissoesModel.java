@@ -1,10 +1,7 @@
 package com.example.testejava.model;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Objects;
-
-import org.hibernate.annotations.ColumnDefault;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,35 +13,26 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Permissão dos computadores
+ */
 @Entity
-@Table(name = "tab_usuariospermissoes")
-public class UsuariosPermissoesModel {
+@Table(name = "tab_computadorespermissoes")
+public class ComputadoresPermissoesModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(nullable = false, length = 15)
+	private String ip;
+	
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idUsuario", referencedColumnName = "id")
-    private UsuariosModel usuario;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idPermissao", referencedColumnName = "id")
-    private PermissoesModel permissao;
-
-    @ColumnDefault("false")
-    private Boolean temporario;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idBoletimPermissao", referencedColumnName = "id")
-    private ChefiaBoletimModel boletimPermissao;
-
-    @ColumnDefault("false")
-    private Boolean substituto;
-
-    private Date dataInicio;
-
-    private Date dataTermino;
+	@JoinColumn(name = "idPermissao", referencedColumnName = "id", nullable = false)
+	private PermissoesModel permissao;
+	
+	@Column(nullable = false)
+	private String descricao;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cadastroId", referencedColumnName = "id", nullable = false)
@@ -82,12 +70,12 @@ public class UsuariosPermissoesModel {
 		this.id = id;
 	}
 
-	public UsuariosModel getUsuario() {
-		return usuario;
+	public String getIp() {
+		return ip;
 	}
 
-	public void setUsuario(UsuariosModel usuario) {
-		this.usuario = usuario;
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 
 	public PermissoesModel getPermissao() {
@@ -98,44 +86,12 @@ public class UsuariosPermissoesModel {
 		this.permissao = permissao;
 	}
 
-	public Boolean getTemporario() {
-		return temporario;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setTemporario(Boolean temporario) {
-		this.temporario = temporario;
-	}
-
-	public ChefiaBoletimModel getBoletimPermissao() {
-		return boletimPermissao;
-	}
-
-	public void setBoletimPermissao(ChefiaBoletimModel boletimPermissao) {
-		this.boletimPermissao = boletimPermissao;
-	}
-
-	public Boolean getSubstituto() {
-		return substituto;
-	}
-
-	public void setSubstituto(Boolean substituto) {
-		this.substituto = substituto;
-	}
-
-	public Date getDataInicio() {
-		return dataInicio;
-	}
-
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
-	}
-
-	public Date getDataTermino() {
-		return dataTermino;
-	}
-
-	public void setDataTermino(Date dataTermino) {
-		this.dataTermino = dataTermino;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public UsuariosModel getCadastro() {
@@ -223,7 +179,7 @@ public class UsuariosPermissoesModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UsuariosPermissoesModel other = (UsuariosPermissoesModel) obj;
+		ComputadoresPermissoesModel other = (ComputadoresPermissoesModel) obj;
 		return Objects.equals(id, other.id);
 	}
 

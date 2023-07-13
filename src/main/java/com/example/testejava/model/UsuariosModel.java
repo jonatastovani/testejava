@@ -61,24 +61,27 @@ public class UsuariosModel {
     private LocalDateTime dataContaExcluida;
 
     @Column(nullable = false)
-    private Long idCadastro;
+    private Long cadastroId;
 
-    private String ipCadastro;
+    @Column(length = 15)
+    private String cadastroIp;
 
     @Column(nullable = false)
-    private LocalDateTime dataCadastro;
+    private LocalDateTime cadastroData;
 
-    private Long idAtualizacao;
+    private Long atualizacaoId;
 
-    private String ipAtualizacao;
+    @Column(length = 15)
+    private String atualizacaoIp;
 
-    private LocalDateTime dataAtualizacao;
+    private LocalDateTime atualizacaoData;
 
-    private Long idExclusoRegistro;
+    private Long exclusoRegistroId;
 
-    private String ipExclusoRegistro;
+    @Column(length = 15)
+    private String exclusoregistroIp;
 
-    private LocalDateTime dataExclusoRegistro;
+    private LocalDateTime exclusoregistroData;
 
 	public Long getId() {
 		return id;
@@ -88,11 +91,11 @@ public class UsuariosModel {
 		this.id = id;
 	}
 
-	public boolean isStatus() {
+	public Boolean getStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 
@@ -126,6 +129,14 @@ public class UsuariosModel {
 
 	public void setApelido(String apelido) {
 		this.apelido = apelido;
+	}
+
+	public Long getIdExibicao() {
+		return idExibicao;
+	}
+
+	public void setIdExibicao(Long idExibicao) {
+		this.idExibicao = idExibicao;
 	}
 
 	public String getSenha() {
@@ -168,11 +179,11 @@ public class UsuariosModel {
 		this.idEscala = idEscala;
 	}
 
-	public boolean isContaBloqueada() {
+	public Boolean getContaBloqueada() {
 		return contaBloqueada;
 	}
 
-	public void setContaBloqueada(boolean contaBloqueada) {
+	public void setContaBloqueada(Boolean contaBloqueada) {
 		this.contaBloqueada = contaBloqueada;
 	}
 
@@ -184,11 +195,11 @@ public class UsuariosModel {
 		this.dataContaBloqueada = dataContaBloqueada;
 	}
 
-	public boolean isContaExcluida() {
+	public Boolean getContaExcluida() {
 		return contaExcluida;
 	}
 
-	public void setContaExcluida(boolean contaExcluida) {
+	public void setContaExcluida(Boolean contaExcluida) {
 		this.contaExcluida = contaExcluida;
 	}
 
@@ -200,84 +211,76 @@ public class UsuariosModel {
 		this.dataContaExcluida = dataContaExcluida;
 	}
 
-	public Long getNomeExibicao() {
-		return idExibicao;
+	public Long getCadastroId() {
+		return cadastroId;
 	}
 
-	public void setNomeExibicao(Long nomeExibicao) {
-		this.idExibicao = nomeExibicao;
+	public void setCadastroId(Long cadastroId) {
+		this.cadastroId = cadastroId;
 	}
 
-	public Long getIdCadastro() {
-		return idCadastro;
+	public String getCadastroIp() {
+		return cadastroIp;
 	}
 
-	public void setIdCadastro(Long idCadastro) {
-		this.idCadastro = idCadastro;
+	public void setCadastroIp(String cadastroIp) {
+		this.cadastroIp = cadastroIp;
 	}
 
-	public String getIpCadastro() {
-		return ipCadastro;
+	public LocalDateTime getCadastroData() {
+		return cadastroData;
 	}
 
-	public void setIpCadastro(String ipCadastro) {
-		this.ipCadastro = ipCadastro;
+	public void setCadastroData(LocalDateTime cadastroData) {
+		this.cadastroData = cadastroData;
 	}
 
-	public LocalDateTime getDataCadastro() {
-		return dataCadastro;
+	public Long getAtualizacaoId() {
+		return atualizacaoId;
 	}
 
-	public void setDataCadastro(LocalDateTime dataCadastro) {
-		this.dataCadastro = dataCadastro;
+	public void setAtualizacaoId(Long atualizacaoId) {
+		this.atualizacaoId = atualizacaoId;
 	}
 
-	public Long getIdAtualizacao() {
-		return idAtualizacao;
+	public String getAtualizacaoIp() {
+		return atualizacaoIp;
 	}
 
-	public void setIdAtualizacao(Long idAtualizacao) {
-		this.idAtualizacao = idAtualizacao;
+	public void setAtualizacaoIp(String atualizacaoIp) {
+		this.atualizacaoIp = atualizacaoIp;
 	}
 
-	public String getIpAtualizacao() {
-		return ipAtualizacao;
+	public LocalDateTime getAtualizacaoData() {
+		return atualizacaoData;
 	}
 
-	public void setIpAtualizacao(String ipAtualizacao) {
-		this.ipAtualizacao = ipAtualizacao;
+	public void setAtualizacaoData(LocalDateTime atualizacaoData) {
+		this.atualizacaoData = atualizacaoData;
 	}
 
-	public LocalDateTime getDataAtualizacao() {
-		return dataAtualizacao;
+	public Long getExclusoRegistroId() {
+		return exclusoRegistroId;
 	}
 
-	public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
-		this.dataAtualizacao = dataAtualizacao;
+	public void setExclusoRegistroId(Long exclusoRegistroId) {
+		this.exclusoRegistroId = exclusoRegistroId;
 	}
 
-	public Long getIdExclusoRegistro() {
-		return idExclusoRegistro;
+	public String getExclusoregistroIp() {
+		return exclusoregistroIp;
 	}
 
-	public void setIdExclusoRegistro(Long idExclusoRegistro) {
-		this.idExclusoRegistro = idExclusoRegistro;
+	public void setExclusoregistroIp(String exclusoregistroIp) {
+		this.exclusoregistroIp = exclusoregistroIp;
 	}
 
-	public String getIpExclusoRegistro() {
-		return ipExclusoRegistro;
+	public LocalDateTime getExclusoregistroData() {
+		return exclusoregistroData;
 	}
 
-	public void setIpExclusoRegistro(String ipExclusoRegistro) {
-		this.ipExclusoRegistro = ipExclusoRegistro;
-	}
-
-	public LocalDateTime getDataExclusoRegistro() {
-		return dataExclusoRegistro;
-	}
-
-	public void setDataExclusoRegistro(LocalDateTime dataExclusoRegistro) {
-		this.dataExclusoRegistro = dataExclusoRegistro;
+	public void setExclusoregistroData(LocalDateTime exclusoregistroData) {
+		this.exclusoregistroData = exclusoregistroData;
 	}
 
 	@Override

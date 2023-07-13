@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,11 +27,11 @@ public class UnidadesModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idCidade", referencedColumnName = "id", nullable = false)
 	private CidadesModel cidade;
 	
-	@ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idPerfil", referencedColumnName = "id", nullable = false)
 	private UnidadesPerfilModel perfil;
 	
@@ -42,11 +43,11 @@ public class UnidadesModel {
 	
 	private String nomeAtribuido;
 	
-	@ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idTipoUnidade", referencedColumnName = "id", nullable = false)
 	private UnidadesTiposModel tipounidade;
 	
-	@ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idCoordenadoria", referencedColumnName = "id", nullable = false)
 	private UnidadesCoordenadorias coordenadoria;
 	
@@ -62,34 +63,34 @@ public class UnidadesModel {
 	private String cep;
 	
 	private String telefone;
-	
-    @ManyToOne
-    @JoinColumn(name = "idCadastro", referencedColumnName = "id")
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cadastroId", referencedColumnName = "id", nullable = false)
     private UsuariosModel cadastro;
 
     @Column(length = 15)
-    private String ipCadastro;
+    private String cadastroIp;
 
     @Column(nullable = false)
-    private LocalDateTime dataCadastro;
+    private LocalDateTime cadastroData;
 
-    @ManyToOne
-    @JoinColumn(name = "idAtualizacao", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "atualizacaoId", referencedColumnName = "id")
     private UsuariosModel atualizacao;
 
     @Column(length = 15)
-    private String ipAtualizacao;
+    private String atualizacaoIp;
 
-    private LocalDateTime dataAtualizacao;
+    private LocalDateTime atualizacaoData;
 
-    @ManyToOne
-    @JoinColumn(name = "idExclusoRegistro", referencedColumnName = "id")
-    private UsuariosModel exclusoRegistro;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "exclusoRegistroId", referencedColumnName = "id")
+    private UsuariosModel exclusoregistro;
 
     @Column(length = 15)
-    private String ipExclusoRegistro;
+    private String exclusoregistroIp;
 
-    private LocalDateTime dataExclusoRegistro;
+    private LocalDateTime exclusoregistroData;
 
 	public Long getId() {
 		return id;
@@ -211,20 +212,20 @@ public class UnidadesModel {
 		this.cadastro = cadastro;
 	}
 
-	public String getIpCadastro() {
-		return ipCadastro;
+	public String getCadastroIp() {
+		return cadastroIp;
 	}
 
-	public void setIpCadastro(String ipCadastro) {
-		this.ipCadastro = ipCadastro;
+	public void setCadastroIp(String cadastroIp) {
+		this.cadastroIp = cadastroIp;
 	}
 
-	public LocalDateTime getDataCadastro() {
-		return dataCadastro;
+	public LocalDateTime getCadastroData() {
+		return cadastroData;
 	}
 
-	public void setDataCadastro(LocalDateTime dataCadastro) {
-		this.dataCadastro = dataCadastro;
+	public void setCadastroData(LocalDateTime cadastroData) {
+		this.cadastroData = cadastroData;
 	}
 
 	public UsuariosModel getAtualizacao() {
@@ -235,44 +236,44 @@ public class UnidadesModel {
 		this.atualizacao = atualizacao;
 	}
 
-	public String getIpAtualizacao() {
-		return ipAtualizacao;
+	public String getAtualizacaoIp() {
+		return atualizacaoIp;
 	}
 
-	public void setIpAtualizacao(String ipAtualizacao) {
-		this.ipAtualizacao = ipAtualizacao;
+	public void setAtualizacaoIp(String atualizacaoIp) {
+		this.atualizacaoIp = atualizacaoIp;
 	}
 
-	public LocalDateTime getDataAtualizacao() {
-		return dataAtualizacao;
+	public LocalDateTime getAtualizacaoData() {
+		return atualizacaoData;
 	}
 
-	public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
-		this.dataAtualizacao = dataAtualizacao;
+	public void setAtualizacaoData(LocalDateTime atualizacaoData) {
+		this.atualizacaoData = atualizacaoData;
 	}
 
-	public UsuariosModel getExclusoRegistro() {
-		return exclusoRegistro;
+	public UsuariosModel getExclusoregistro() {
+		return exclusoregistro;
 	}
 
-	public void setExclusoRegistro(UsuariosModel exclusoRegistro) {
-		this.exclusoRegistro = exclusoRegistro;
+	public void setExclusoregistro(UsuariosModel exclusoregistro) {
+		this.exclusoregistro = exclusoregistro;
 	}
 
-	public String getIpExclusoRegistro() {
-		return ipExclusoRegistro;
+	public String getExclusoregistroIp() {
+		return exclusoregistroIp;
 	}
 
-	public void setIpExclusoRegistro(String ipExclusoRegistro) {
-		this.ipExclusoRegistro = ipExclusoRegistro;
+	public void setExclusoregistroIp(String exclusoregistroIp) {
+		this.exclusoregistroIp = exclusoregistroIp;
 	}
 
-	public LocalDateTime getDataExclusoRegistro() {
-		return dataExclusoRegistro;
+	public LocalDateTime getExclusoregistroData() {
+		return exclusoregistroData;
 	}
 
-	public void setDataExclusoRegistro(LocalDateTime dataExclusoRegistro) {
-		this.dataExclusoRegistro = dataExclusoRegistro;
+	public void setExclusoregistroData(LocalDateTime exclusoregistroData) {
+		this.exclusoregistroData = exclusoregistroData;
 	}
 
 	@Override
