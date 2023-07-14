@@ -37,7 +37,7 @@ public class TurnosModel {
 
     @ManyToOne
     @JoinColumn(name = "idDiretorCarceragem", referencedColumnName = "id")
-    //@ColumnDefault("53")
+    @ColumnDefault("53")
     private PermissoesModel diretorCarceragem;
 
 	public Long getId() {
