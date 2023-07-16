@@ -14,15 +14,15 @@ public class UsuariosServices {
     @Autowired
     UsuariosRepository usuariosRepository;
 
-    public List<UsuariosModel> listUsers() {
+    public List<UsuariosModel> listarUsuarios() {
         return usuariosRepository.findAll();
     }
 
-    public Optional<UsuariosModel> fetchUserById(Long id) {
+    public Optional<UsuariosModel> buscarUsuarioPorId(Long id) {
         return usuariosRepository.findById(id);
     }
 
-    public UsuariosModel newUser(UsuariosModel user) {
-        return usuariosRepository.save(user);
+    public UsuariosModel novoUsuario(UsuariosModel usuario) {
+        return usuariosRepository.save(usuario);
     }
 }

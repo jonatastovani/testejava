@@ -4,8 +4,6 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import org.hibernate.annotations.ColumnDefault;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,18 +25,17 @@ public class PessoaCadastroModel {
     @Column(nullable = false)
     private String nome;
     
-    @Column(nullable = false)
-    private String nomesocial;
+    private String nomeSocial;
     
     private String rg;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idEmissorRg", referencedColumnName = "id")
-    private RGExpedidorModel expedidorrg;
+    @JoinColumn(name = "rgIdExpedidor", referencedColumnName = "id")
+    private RGExpedidorModel rgexpedidor;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idEstadoRg", referencedColumnName = "id")
-    private EstadosModel estadorg;
+    @JoinColumn(name = "rgIdEstado", referencedColumnName = "id")
+    private EstadosModel rgestador;
     
     @Column(length = 14)
     private String cpf;
@@ -50,17 +47,18 @@ public class PessoaCadastroModel {
     private String observacoes;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idNacionalidade", referencedColumnName = "id")
-    private NacionalidadesModel nacionalidade;
+    @JoinColumn(name = "nascIdNacionalidade", referencedColumnName = "id")
+    private NacionalidadesModel nascnacionalidade;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idCidadeNasc", referencedColumnName = "id")
-    private CidadesModel cidadenasc;
+    @JoinColumn(name = "nascIdEstado", referencedColumnName = "id")
+    private EstadosModel nascestado;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "nascIdCidade", referencedColumnName = "id")
+    private CidadesModel nasccidade;
     
-    private Date dataNasc;
-    
-    @ColumnDefault("false")
-    private Boolean emancipado;
+    private Date nascData;
     
     private String endEndereco;
 
@@ -80,8 +78,10 @@ public class PessoaCadastroModel {
     @JoinColumn(name = "endIdEstadoMorad", referencedColumnName = "id")
     private EstadosModel endestadomorad;
 
+    private Long cadastroId;
+    
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cadastroId", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "cadastroId", referencedColumnName = "id")
     private UsuariosModel cadastro;
 
     @Column(length = 15)
@@ -89,6 +89,8 @@ public class PessoaCadastroModel {
 
     @Column(nullable = false)
     private LocalDateTime cadastroData;
+
+    private Long atualizacaoId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "atualizacaoId", referencedColumnName = "id")
@@ -99,8 +101,10 @@ public class PessoaCadastroModel {
 
     private LocalDateTime atualizacaoData;
 
+    private Long exclusoregistroId;
+
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "exclusoRegistroId", referencedColumnName = "id")
+    @JoinColumn(name = "exclusoregistroId", referencedColumnName = "id")
     private UsuariosModel exclusoregistro;
 
     @Column(length = 15)
@@ -124,12 +128,12 @@ public class PessoaCadastroModel {
 		this.nome = nome;
 	}
 
-	public String getNomesocial() {
-		return nomesocial;
+	public String getNomeSocial() {
+		return nomeSocial;
 	}
 
-	public void setNomesocial(String nomesocial) {
-		this.nomesocial = nomesocial;
+	public void setNomeSocial(String nomeSocial) {
+		this.nomeSocial = nomeSocial;
 	}
 
 	public String getRg() {
@@ -140,20 +144,20 @@ public class PessoaCadastroModel {
 		this.rg = rg;
 	}
 
-	public RGExpedidorModel getExpedidorrg() {
-		return expedidorrg;
+	public RGExpedidorModel getRgexpedidor() {
+		return rgexpedidor;
 	}
 
-	public void setExpedidorrg(RGExpedidorModel expedidorrg) {
-		this.expedidorrg = expedidorrg;
+	public void setRgexpedidor(RGExpedidorModel rgexpedidor) {
+		this.rgexpedidor = rgexpedidor;
 	}
 
-	public EstadosModel getEstadorg() {
-		return estadorg;
+	public EstadosModel getRgestador() {
+		return rgestador;
 	}
 
-	public void setEstadorg(EstadosModel estadorg) {
-		this.estadorg = estadorg;
+	public void setRgestador(EstadosModel rgestador) {
+		this.rgestador = rgestador;
 	}
 
 	public String getCpf() {
@@ -188,36 +192,36 @@ public class PessoaCadastroModel {
 		this.observacoes = observacoes;
 	}
 
-	public NacionalidadesModel getNacionalidade() {
-		return nacionalidade;
+	public NacionalidadesModel getNascnacionalidade() {
+		return nascnacionalidade;
 	}
 
-	public void setNacionalidade(NacionalidadesModel nacionalidade) {
-		this.nacionalidade = nacionalidade;
+	public void setNascnacionalidade(NacionalidadesModel nascnacionalidade) {
+		this.nascnacionalidade = nascnacionalidade;
 	}
 
-	public CidadesModel getCidadenasc() {
-		return cidadenasc;
+	public EstadosModel getNascestado() {
+		return nascestado;
 	}
 
-	public void setCidadenasc(CidadesModel cidadenasc) {
-		this.cidadenasc = cidadenasc;
+	public void setNascestado(EstadosModel nascestado) {
+		this.nascestado = nascestado;
 	}
 
-	public Date getDataNasc() {
-		return dataNasc;
+	public CidadesModel getNasccidade() {
+		return nasccidade;
 	}
 
-	public void setDataNasc(Date dataNasc) {
-		this.dataNasc = dataNasc;
+	public void setNasccidade(CidadesModel nasccidade) {
+		this.nasccidade = nasccidade;
 	}
 
-	public Boolean getEmancipado() {
-		return emancipado;
+	public Date getNascData() {
+		return nascData;
 	}
 
-	public void setEmancipado(Boolean emancipado) {
-		this.emancipado = emancipado;
+	public void setNascData(Date nascData) {
+		this.nascData = nascData;
 	}
 
 	public String getEndEndereco() {
@@ -276,6 +280,14 @@ public class PessoaCadastroModel {
 		this.endestadomorad = endestadomorad;
 	}
 
+	public Long getCadastroId() {
+		return cadastroId;
+	}
+
+	public void setCadastroId(Long cadastroId) {
+		this.cadastroId = cadastroId;
+	}
+
 	public UsuariosModel getCadastro() {
 		return cadastro;
 	}
@@ -300,6 +312,14 @@ public class PessoaCadastroModel {
 		this.cadastroData = cadastroData;
 	}
 
+	public Long getAtualizacaoId() {
+		return atualizacaoId;
+	}
+
+	public void setAtualizacaoId(Long atualizacaoId) {
+		this.atualizacaoId = atualizacaoId;
+	}
+
 	public UsuariosModel getAtualizacao() {
 		return atualizacao;
 	}
@@ -322,6 +342,14 @@ public class PessoaCadastroModel {
 
 	public void setAtualizacaoData(LocalDateTime atualizacaoData) {
 		this.atualizacaoData = atualizacaoData;
+	}
+
+	public Long getExclusoregistroId() {
+		return exclusoregistroId;
+	}
+
+	public void setExclusoregistroId(Long exclusoregistroId) {
+		this.exclusoregistroId = exclusoregistroId;
 	}
 
 	public UsuariosModel getExclusoregistro() {

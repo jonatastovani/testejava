@@ -22,14 +22,14 @@ public class RGExpedidorModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String nome;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String sigla;
 
 	@ManyToOne
-	@JoinColumn(name = "tab_orgao_expedidor_tipo", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "idTipoExpedidor", referencedColumnName = "id", nullable = false)
 	private RGExpedidorTipoModel tipoexpedidor;
 
 	public Long getId() {

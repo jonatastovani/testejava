@@ -17,12 +17,12 @@ public class PessoaCadastroController {
 
     @GetMapping
     public List<PessoaCadastroModel> listAll() {
-        return service.listAll();
+        return service.buscarTodasPessoas();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PessoaCadastroModel> fetchPessoaById(@PathVariable Long id) {
-        Optional<PessoaCadastroModel> pessoa = service.fetchPessoaById(id);
+    public ResponseEntity<PessoaCadastroModel> buscarPessoaPorId(@PathVariable Long id) {
+        Optional<PessoaCadastroModel> pessoa = service.buscarPessoaPorId(id);
 
         if (pessoa.isPresent()) {
             return ResponseEntity.ok(pessoa.get());
@@ -31,9 +31,9 @@ public class PessoaCadastroController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<PessoaCadastroModel> newUser(@RequestBody PessoaCadastroModel user) {
-    	PessoaCadastroModel newUser = service.newUser(user);
-        return ResponseEntity.ok(newUser);
+    @PostMapping("/cadastrar")
+    public ResponseEntity<PessoaCadastroModel> novaPessoa(@RequestBody PessoaCadastroModel user) {
+    	PessoaCadastroModel novaPessoa = service.novaPessoa(user);
+        return ResponseEntity.ok(novaPessoa);
     }
 }

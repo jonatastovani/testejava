@@ -2,9 +2,12 @@ package com.example.testejava.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
@@ -29,8 +32,9 @@ public class UsuariosModel {
     @Column(unique = true)
     private Integer rsUsuario;
 
-    @Column(nullable = false)
-    private String nome;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idPessoa", referencedColumnName = "id", nullable = false)
+    private PessoaCadastroModel pessoa;
 
     @Column(unique = true)
     private String apelido;
@@ -38,11 +42,6 @@ public class UsuariosModel {
     private Long idExibicao;
 
     private String senha;
-
-    private String rg;
-
-    @Column(nullable = false, unique = true)
-    private String cpf;
 
     private Long idTurno;
 
@@ -60,7 +59,6 @@ public class UsuariosModel {
 
     private LocalDateTime dataContaExcluida;
 
-    @Column(nullable = false)
     private Long cadastroId;
 
     @Column(length = 15)
@@ -76,7 +74,7 @@ public class UsuariosModel {
 
     private LocalDateTime atualizacaoData;
 
-    private Long exclusoRegistroId;
+    private Long exclusoregistroId;
 
     @Column(length = 15)
     private String exclusoregistroIp;
@@ -115,12 +113,12 @@ public class UsuariosModel {
 		this.rsUsuario = rsUsuario;
 	}
 
-	public String getNome() {
-		return nome;
+	public PessoaCadastroModel getPessoa() {
+		return pessoa;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setPessoa(PessoaCadastroModel pessoa) {
+		this.pessoa = pessoa;
 	}
 
 	public String getApelido() {
@@ -145,22 +143,6 @@ public class UsuariosModel {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}
-
-	public String getRg() {
-		return rg;
-	}
-
-	public void setRg(String rg) {
-		this.rg = rg;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
 	}
 
 	public Long getIdTurno() {
@@ -259,12 +241,12 @@ public class UsuariosModel {
 		this.atualizacaoData = atualizacaoData;
 	}
 
-	public Long getExclusoRegistroId() {
-		return exclusoRegistroId;
+	public Long getExclusoregistroId() {
+		return exclusoregistroId;
 	}
 
-	public void setExclusoRegistroId(Long exclusoRegistroId) {
-		this.exclusoRegistroId = exclusoRegistroId;
+	public void setExclusoregistroId(Long exclusoregistroId) {
+		this.exclusoregistroId = exclusoregistroId;
 	}
 
 	public String getExclusoregistroIp() {

@@ -17,12 +17,12 @@ public class UsuariosController {
 
     @GetMapping
     public List<UsuariosModel> listUsers() {
-        return usuariosServices.listUsers();
+        return usuariosServices.listarUsuarios();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UsuariosModel> fetchUserById(@PathVariable Long id) {
-        Optional<UsuariosModel> user = usuariosServices.fetchUserById(id);
+        Optional<UsuariosModel> user = usuariosServices.buscarUsuarioPorId(id);
 
         if (user.isPresent()) {
             return ResponseEntity.ok(user.get());
@@ -33,7 +33,7 @@ public class UsuariosController {
 
     @PostMapping
     public ResponseEntity<UsuariosModel> newUser(@RequestBody UsuariosModel user) {
-        UsuariosModel newUser = usuariosServices.newUser(user);
+        UsuariosModel newUser = usuariosServices.novoUsuario(user);
         return ResponseEntity.ok(newUser);
     }
 }

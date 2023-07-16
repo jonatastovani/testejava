@@ -43,7 +43,7 @@ public class CimicArtigosModel {
     private LocalDateTime atualizacaoData;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "exclusoRegistroId", referencedColumnName = "id")
+    @JoinColumn(name = "exclusoregistroId", referencedColumnName = "id")
     private UsuariosModel exclusoregistro;
 
     @Column(length = 15)
