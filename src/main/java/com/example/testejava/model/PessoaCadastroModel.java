@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "pessoa_cadastro")
@@ -78,6 +79,7 @@ public class PessoaCadastroModel {
     @JoinColumn(name = "endIdEstadoMorad", referencedColumnName = "id")
     private EstadosModel endestadomorad;
 
+    @Transient
     private Long cadastroId;
     
     @ManyToOne(fetch = FetchType.EAGER)
@@ -90,8 +92,9 @@ public class PessoaCadastroModel {
     @Column(nullable = false)
     private LocalDateTime cadastroData;
 
+    @Transient
     private Long atualizacaoId;
-
+    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "atualizacaoId", referencedColumnName = "id")
     private UsuariosModel atualizacao;
@@ -101,6 +104,7 @@ public class PessoaCadastroModel {
 
     private LocalDateTime atualizacaoData;
 
+    @Transient
     private Long exclusoregistroId;
 
     @ManyToOne(fetch = FetchType.EAGER)
