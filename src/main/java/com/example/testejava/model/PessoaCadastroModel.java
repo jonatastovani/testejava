@@ -30,15 +30,21 @@ public class PessoaCadastroModel {
     
     private String rg;
     
+    @Transient
+    private Long rgIdExpedidor;
+    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rgIdExpedidor", referencedColumnName = "id")
-    private RGExpedidorModel rgexpedidor;
+    private RGExpedidorModel rgExpedidor;
     
+    @Transient
+    private Long rgIdEstado;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rgIdEstado", referencedColumnName = "id")
-    private EstadosModel rgestador;
+    private EstadosModel rgEstado;
     
-    @Column(length = 14)
+    @Column(length = 14, unique = true)
     private String cpf;
     
     private String nomePai;
@@ -47,17 +53,26 @@ public class PessoaCadastroModel {
     
     private String observacoes;
     
+    @Transient
+    private Long nascIdNacionalidade;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "nascIdNacionalidade", referencedColumnName = "id")
-    private NacionalidadesModel nascnacionalidade;
+    private NacionalidadesModel nascNacionalidade;
     
+    @Transient
+    private Long nascIdEstado;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "nascIdEstado", referencedColumnName = "id")
-    private EstadosModel nascestado;
+    private EstadosModel nascEstado;
+
+    @Transient
+    private Long nascIdCidade;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "nascIdCidade", referencedColumnName = "id")
-    private CidadesModel nasccidade;
+    private CidadesModel nascCidade;
     
     private Date nascData;
     
@@ -71,13 +86,19 @@ public class PessoaCadastroModel {
 
     private String endCep;
     
+    @Transient
+    private Long endIdCidadeMorad;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "endIdCidadeMorad", referencedColumnName = "id")
-    private CidadesModel endcidademorad;
+    private CidadesModel endCidadeMorad;
     
+    @Transient
+    private Long endIdEstadoMorad;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "endIdEstadoMorad", referencedColumnName = "id")
-    private EstadosModel endestadomorad;
+    private EstadosModel endEstadoMorad;
 
     @Transient
     private Long cadastroId;
@@ -148,20 +169,36 @@ public class PessoaCadastroModel {
 		this.rg = rg;
 	}
 
-	public RGExpedidorModel getRgexpedidor() {
-		return rgexpedidor;
+	public Long getRgIdExpedidor() {
+		return rgIdExpedidor;
 	}
 
-	public void setRgexpedidor(RGExpedidorModel rgexpedidor) {
-		this.rgexpedidor = rgexpedidor;
+	public void setRgIdExpedidor(Long rgIdExpedidor) {
+		this.rgIdExpedidor = rgIdExpedidor;
 	}
 
-	public EstadosModel getRgestador() {
-		return rgestador;
+	public RGExpedidorModel getRgExpedidor() {
+		return rgExpedidor;
 	}
 
-	public void setRgestador(EstadosModel rgestador) {
-		this.rgestador = rgestador;
+	public void setRgExpedidor(RGExpedidorModel rgExpedidor) {
+		this.rgExpedidor = rgExpedidor;
+	}
+
+	public Long getRgIdEstado() {
+		return rgIdEstado;
+	}
+
+	public void setRgIdEstado(Long rgIdEstado) {
+		this.rgIdEstado = rgIdEstado;
+	}
+
+	public EstadosModel getRgEstado() {
+		return rgEstado;
+	}
+
+	public void setRgEstado(EstadosModel rgEstado) {
+		this.rgEstado = rgEstado;
 	}
 
 	public String getCpf() {
@@ -196,28 +233,52 @@ public class PessoaCadastroModel {
 		this.observacoes = observacoes;
 	}
 
-	public NacionalidadesModel getNascnacionalidade() {
-		return nascnacionalidade;
+	public Long getNascIdNacionalidade() {
+		return nascIdNacionalidade;
 	}
 
-	public void setNascnacionalidade(NacionalidadesModel nascnacionalidade) {
-		this.nascnacionalidade = nascnacionalidade;
+	public void setNascIdNacionalidade(Long nascIdNacionalidade) {
+		this.nascIdNacionalidade = nascIdNacionalidade;
 	}
 
-	public EstadosModel getNascestado() {
-		return nascestado;
+	public NacionalidadesModel getNascNacionalidade() {
+		return nascNacionalidade;
 	}
 
-	public void setNascestado(EstadosModel nascestado) {
-		this.nascestado = nascestado;
+	public void setNascNacionalidade(NacionalidadesModel nascNacionalidade) {
+		this.nascNacionalidade = nascNacionalidade;
 	}
 
-	public CidadesModel getNasccidade() {
-		return nasccidade;
+	public Long getNascIdEstado() {
+		return nascIdEstado;
 	}
 
-	public void setNasccidade(CidadesModel nasccidade) {
-		this.nasccidade = nasccidade;
+	public void setNascIdEstado(Long nascIdEstado) {
+		this.nascIdEstado = nascIdEstado;
+	}
+
+	public EstadosModel getNascEstado() {
+		return nascEstado;
+	}
+
+	public void setNascEstado(EstadosModel nascEstado) {
+		this.nascEstado = nascEstado;
+	}
+
+	public Long getNascIdCidade() {
+		return nascIdCidade;
+	}
+
+	public void setNascIdCidade(Long nascIdCidade) {
+		this.nascIdCidade = nascIdCidade;
+	}
+
+	public CidadesModel getNascCidade() {
+		return nascCidade;
+	}
+
+	public void setNascCidade(CidadesModel nascCidade) {
+		this.nascCidade = nascCidade;
 	}
 
 	public Date getNascData() {
@@ -268,20 +329,36 @@ public class PessoaCadastroModel {
 		this.endCep = endCep;
 	}
 
-	public CidadesModel getEndcidademorad() {
-		return endcidademorad;
+	public Long getEndIdCidadeMorad() {
+		return endIdCidadeMorad;
 	}
 
-	public void setEndcidademorad(CidadesModel endcidademorad) {
-		this.endcidademorad = endcidademorad;
+	public void setEndIdCidadeMorad(Long endIdCidadeMorad) {
+		this.endIdCidadeMorad = endIdCidadeMorad;
 	}
 
-	public EstadosModel getEndestadomorad() {
-		return endestadomorad;
+	public CidadesModel getEndCidadeMorad() {
+		return endCidadeMorad;
 	}
 
-	public void setEndestadomorad(EstadosModel endestadomorad) {
-		this.endestadomorad = endestadomorad;
+	public void setEndCidadeMorad(CidadesModel endCidadeMorad) {
+		this.endCidadeMorad = endCidadeMorad;
+	}
+
+	public Long getEndIdEstadoMorad() {
+		return endIdEstadoMorad;
+	}
+
+	public void setEndIdEstadoMorad(Long endIdEstadoMorad) {
+		this.endIdEstadoMorad = endIdEstadoMorad;
+	}
+
+	public EstadosModel getEndEstadoMorad() {
+		return endEstadoMorad;
+	}
+
+	public void setEndEstadoMorad(EstadosModel endEstadoMorad) {
+		this.endEstadoMorad = endEstadoMorad;
 	}
 
 	public Long getCadastroId() {

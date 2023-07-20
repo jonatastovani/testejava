@@ -1,8 +1,11 @@
 package com.example.testejava.resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.testejava.exception.CustomException;
 import com.example.testejava.model.PessoaCadastroModel;
 import com.example.testejava.service.PessoaCadastroServices;
 
@@ -32,8 +35,14 @@ public class PessoaCadastroController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<PessoaCadastroModel> novaPessoa(@RequestBody PessoaCadastroModel user) {
-    	PessoaCadastroModel novaPessoa = service.novaPessoa(user);
-        return ResponseEntity.ok(novaPessoa);
+    public ResponseEntity<Void> novaPessoa(@RequestBody PessoaCadastroModel user) {
+        try {
+            service.novaPessoa(user);
+            return ResponseEntity.ok().build();
+        } catch (CustomException ex) {
+            HttpStatus status = ex.getHttpStatus();
+            return ResponseEntity.status(status).body(ex.getMessage());
+        }
     }
 }
+
