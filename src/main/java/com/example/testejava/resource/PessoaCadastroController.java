@@ -1,11 +1,10 @@
 package com.example.testejava.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.testejava.exception.CustomException;
+import com.example.testejava.exception.CustomRuntimeException;
 import com.example.testejava.model.PessoaCadastroModel;
 import com.example.testejava.service.PessoaCadastroServices;
 
@@ -15,6 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/pessoa")
 public class PessoaCadastroController {
+
     @Autowired
     PessoaCadastroServices service;
 
@@ -35,14 +35,13 @@ public class PessoaCadastroController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Void> novaPessoa(@RequestBody PessoaCadastroModel user) {
+    public ResponseEntity<Object> novaPessoa(@RequestBody PessoaCadastroModel user) {
         try {
             service.novaPessoa(user);
             return ResponseEntity.ok().build();
-        } catch (CustomException ex) {
-            HttpStatus status = ex.getHttpStatus();
-            return ResponseEntity.status(status).body(ex.getMessage());
+        } catch (CustomRuntimeException ex) {
+        	CustomRuntimeException errorResponse = new CustomRuntimeException(ex.getErrorCode(), ex.getMessage(), ex.getStatus());
+            return ResponseEntity.status(ex.getStatus()).body(errorResponse);
         }
     }
 }
-

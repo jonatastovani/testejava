@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.example.testejava.exception.CustomException;
+import com.example.testejava.exception.CustomRuntimeException;
 import com.example.testejava.model.CidadesModel;
 import com.example.testejava.model.EstadosModel;
 import com.example.testejava.model.NacionalidadesModel;
@@ -45,61 +45,53 @@ public class PessoaCadastroServices {
     }
 
     public PessoaCadastroModel novaPessoa(PessoaCadastroModel novaPessoa) {
+        Boolean cpfExistente = consultaCPFExistente(novaPessoa.getCpf());
 
-        try {
-            Boolean cpfExistente = consultaCPFExistente(novaPessoa.getCpf());
-
-            if (cpfExistente == true) {
-                throw new CustomException("CPF_DUPLICADO", "O CPF informado já existe cadastrado.", HttpStatus.CONFLICT);
-            }
-            Long cadastroId = novaPessoa.getCadastroId();
-
-            if (cadastroId == null) {
-                throw new CustomException("ID_CADASTRO_NÃO_INFORMADO", "O ID do usuário de cadastro não foi informado", HttpStatus.BAD_REQUEST);
-            }
-
-            Optional<UsuariosModel> cadastro = repositoryUsuarios.buscarUsuarioPorId(cadastroId);
-
-            if (!cadastro.isPresent()) {
-                throw new CustomException("ID_CADASTRO_INEXISTENTE", "O usuário de cadastro não existe", HttpStatus.NOT_FOUND);
-            }
-
-            Optional<RGExpedidorModel> rgExpedidor = rgExpedidorService.buscarRGExpedidorPorId(novaPessoa.getRgIdExpedidor());
-            Optional<EstadosModel> rgEstado = estadosService.buscarEstadoPorId(novaPessoa.getRgIdEstado());
-            Optional<CidadesModel> nascCidade = cidadesService.buscarCidadePorId(novaPessoa.getNascIdCidade());
-            Optional<EstadosModel> nascEstado = estadosService.buscarEstadoPorId(novaPessoa.getNascIdEstado());
-            Optional<NacionalidadesModel> nascNacionalidade = nacionalidadesService.buscarNacionalidadePorId(novaPessoa.getNascIdNacionalidade());
-
-            if (rgExpedidor.isPresent()) {
-                novaPessoa.setRgExpedidor(rgExpedidor.get());
-            }
-
-            if (rgEstado.isPresent()) {
-                novaPessoa.setRgEstado(rgEstado.get());
-            }
-
-            if (nascCidade.isPresent()) {
-                novaPessoa.setNascCidade(nascCidade.get());
-            }
-
-            if (nascEstado.isPresent()) {
-                novaPessoa.setNascEstado(nascEstado.get());
-            }
-
-            if (nascNacionalidade.isPresent()) {
-                novaPessoa.setNascNacionalidade(nascNacionalidade.get());
-            }
-
-            novaPessoa.setCadastro(cadastro.get());
-
-            return repository.save(novaPessoa);
-
-        } catch (CustomException ex) {
-            throw ex;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new CustomException("UNKNOWN_ERROR", "Ocorreu um erro ao cadastrar a nova pessoa", HttpStatus.INTERNAL_SERVER_ERROR);
+        if (cpfExistente) {
+            throw new CustomRuntimeException("CPF_DUPLICADO", "O CPF informado já existe cadastrado.", HttpStatus.CONFLICT);
         }
+
+        Long cadastroId = novaPessoa.getCadastroId();
+
+        if (cadastroId == null) {
+            throw new CustomRuntimeException("ID_CADASTRO_NÃO_INFORMADO", "O ID do usuário de cadastro não foi informado", HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<UsuariosModel> cadastro = repositoryUsuarios.buscarUsuarioPorId(cadastroId);
+
+        if (!cadastro.isPresent()) {
+            throw new CustomRuntimeException("ID_CADASTRO_INEXISTENTE", "O usuário de cadastro não existe", HttpStatus.NOT_FOUND);
+        }
+
+        Optional<RGExpedidorModel> rgExpedidor = rgExpedidorService.buscarRGExpedidorPorId(novaPessoa.getRgIdExpedidor());
+        Optional<EstadosModel> rgEstado = estadosService.buscarEstadoPorId(novaPessoa.getRgIdEstado());
+        Optional<CidadesModel> nascCidade = cidadesService.buscarCidadePorId(novaPessoa.getNascIdCidade());
+        Optional<EstadosModel> nascEstado = estadosService.buscarEstadoPorId(novaPessoa.getNascIdEstado());
+        Optional<NacionalidadesModel> nascNacionalidade = nacionalidadesService.buscarNacionalidadePorId(novaPessoa.getNascIdNacionalidade());
+
+        if (rgExpedidor.isPresent()) {
+            novaPessoa.setRgExpedidor(rgExpedidor.get());
+        }
+
+        if (rgEstado.isPresent()) {
+            novaPessoa.setRgEstado(rgEstado.get());
+        }
+
+        if (nascCidade.isPresent()) {
+            novaPessoa.setNascCidade(nascCidade.get());
+        }
+
+        if (nascEstado.isPresent()) {
+            novaPessoa.setNascEstado(nascEstado.get());
+        }
+
+        if (nascNacionalidade.isPresent()) {
+            novaPessoa.setNascNacionalidade(nascNacionalidade.get());
+        }
+
+        novaPessoa.setCadastro(cadastro.get());
+
+        return repository.save(novaPessoa);
     }
 
     public Boolean consultaCPFExistente(String cpf) {
