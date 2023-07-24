@@ -45,18 +45,16 @@ public class PessoaCadastroServices {
     }
 
     public PessoaCadastroModel novaPessoa(PessoaCadastroModel novaPessoa) {
-        Boolean cpfExistente = consultaCPFExistente(novaPessoa.getCpf());
 
-        if (cpfExistente) {
-            throw new CustomRuntimeException("CPF_DUPLICADO", "O CPF informado já existe cadastrado.", HttpStatus.CONFLICT);
-        }
-
+        @SuppressWarnings("unused")
+		final Boolean cpfExistente = consultaCPFExistente(novaPessoa.getCpf());
+        
         Long cadastroId = novaPessoa.getCadastroId();
 
         if (cadastroId == null) {
             throw new CustomRuntimeException("ID_CADASTRO_NÃO_INFORMADO", "O ID do usuário de cadastro não foi informado", HttpStatus.BAD_REQUEST);
         }
-
+        
         Optional<UsuariosModel> cadastro = repositoryUsuarios.buscarUsuarioPorId(cadastroId);
 
         if (!cadastro.isPresent()) {
@@ -95,7 +93,14 @@ public class PessoaCadastroServices {
     }
 
     public Boolean consultaCPFExistente(String cpf) {
+    	if (cpf==null || cpf.isEmpty()) {
+            throw new CustomRuntimeException("CPF_NÃO_INFORMADO", "O CPF não foi informado.", HttpStatus.BAD_REQUEST);
+    	}
+
         Optional<PessoaCadastroModel> pessoaExistente = buscarPessoaPorCpf(cpf);
+        if (pessoaExistente.isPresent()) {
+            throw new CustomRuntimeException("CPF_DUPLICADO", "O CPF informado já existe cadastrado.", HttpStatus.CONFLICT);
+        }
         return pessoaExistente.isPresent();
     }
 }

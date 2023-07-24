@@ -40,8 +40,8 @@ public class PessoaCadastroController {
             service.novaPessoa(user);
             return ResponseEntity.ok().build();
         } catch (CustomRuntimeException ex) {
-        	CustomRuntimeException errorResponse = new CustomRuntimeException(ex.getErrorCode(), ex.getMessage(), ex.getStatus());
-            return ResponseEntity.status(ex.getStatus()).body(errorResponse);
+        	CustomRuntimeException errorResponse = new CustomRuntimeException(ex.getErrorCode(), ex.getMessage(), ex.getHttpStatus());
+            return ResponseEntity.status(ex.getHttpStatus()).body(errorResponse);
         }
     }
 }
