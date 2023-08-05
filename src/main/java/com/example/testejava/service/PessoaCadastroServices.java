@@ -21,8 +21,9 @@ public class PessoaCadastroServices {
 
     @Autowired
     PessoaCadastroRepository repository;
+    
     @Autowired
-    UsuariosServices repositoryUsuarios;
+    UsuariosServices usuariosService;
     @Autowired
     RGExpedidorService rgExpedidorService;
     @Autowired
@@ -45,21 +46,13 @@ public class PessoaCadastroServices {
     }
 
     public PessoaCadastroModel novaPessoa(PessoaCadastroModel novaPessoa) {
-
+   	
         @SuppressWarnings("unused")
 		final Boolean cpfExistente = consultaCPFExistente(novaPessoa.getCpf());
         
         Long cadastroId = novaPessoa.getCadastroId();
 
-        if (cadastroId == null) {
-            throw new CustomRuntimeException("ID_CADASTRO_NÃO_INFORMADO", "O ID do usuário de cadastro não foi informado", HttpStatus.BAD_REQUEST);
-        }
-        
-        Optional<UsuariosModel> cadastro = repositoryUsuarios.buscarUsuarioPorId(cadastroId);
-
-        if (!cadastro.isPresent()) {
-            throw new CustomRuntimeException("ID_CADASTRO_INEXISTENTE", "O usuário de cadastro não existe", HttpStatus.NOT_FOUND);
-        }
+		final Optional<UsuariosModel> confereCadastroId = usuariosService.verificaIdCadastroInformado(cadastroId);
 
         Optional<RGExpedidorModel> rgExpedidor = rgExpedidorService.buscarRGExpedidorPorId(novaPessoa.getRgIdExpedidor());
         Optional<EstadosModel> rgEstado = estadosService.buscarEstadoPorId(novaPessoa.getRgIdEstado());
@@ -87,7 +80,7 @@ public class PessoaCadastroServices {
             novaPessoa.setNascNacionalidade(nascNacionalidade.get());
         }
 
-        novaPessoa.setCadastro(cadastro.get());
+        novaPessoa.setCadastro(confereCadastroId.get());
 
         return repository.save(novaPessoa);
     }

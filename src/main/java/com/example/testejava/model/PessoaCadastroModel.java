@@ -4,8 +4,6 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import org.antlr.v4.runtime.misc.NotNull;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

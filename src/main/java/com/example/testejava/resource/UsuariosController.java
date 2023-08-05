@@ -31,7 +31,7 @@ public class UsuariosController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     public ResponseEntity<UsuariosModel> newUser(@RequestBody UsuariosModel user) {
         UsuariosModel newUser = usuariosServices.novoUsuario(user);
         return ResponseEntity.ok(newUser);
