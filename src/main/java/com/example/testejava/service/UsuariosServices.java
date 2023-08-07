@@ -4,8 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.example.testejava.exception.CustomRuntimeException;
+import com.example.testejava.model.PessoaCadastroModel;
 import com.example.testejava.model.UsuariosModel;
 import com.example.testejava.repository.UsuariosRepository;
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +18,9 @@ public class UsuariosServices {
     @Autowired
     UsuariosRepository usuariosRepository;
 
+    @Autowired
+    PessoaCadastroServices pessoaCadastroServices;
+    
     public List<UsuariosModel> listarUsuarios() {
         return usuariosRepository.findAll();
     }
@@ -32,6 +37,10 @@ public class UsuariosServices {
     	@SuppressWarnings("unused")
 		final Boolean nomeUsuarioConferencia = verificaNomeUsuarioExistente(usuario.getUsuario());
     	
+    	@SuppressWarnings("unused")
+    	final Optional<PessoaCadastroModel> pessoaIdConferencia = verificaIdPessoaInformado(usuario.getIdPessoa());
+    	
+
     	
     	
         return usuariosRepository.save(usuario);
@@ -61,6 +70,20 @@ public class UsuariosServices {
             throw new CustomRuntimeException("NOME_USUARIO_DUPLICADO", "O nome de usuário informado já existe cadastrado.", HttpStatus.CONFLICT);
         }
         return usuarioExistente.isPresent();
+    }
+    
+
+    public Optional<PessoaCadastroModel> verificaIdPessoaInformado (Long pessoaId) {
+    	if (pessoaId==null || pessoaId<1) {
+            throw new CustomRuntimeException("ID_PESSOA_NÃO_INFORMADO", "O ID Pessoa não foi informado", HttpStatus.BAD_REQUEST);
+    	}
     	
+        Optional<PessoaCadastroModel> pessoa = pessoaCadastroServices.buscarPessoaPorId(pessoaId);
+
+        if (!pessoa.isPresent()) {
+            throw new CustomRuntimeException("ID_PESSOA_INEXISTENTE", "O ID Pessoa informado não existe", HttpStatus.NOT_FOUND);
+        }
+        
+        return pessoa;
     }
 }

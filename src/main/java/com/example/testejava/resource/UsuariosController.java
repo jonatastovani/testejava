@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.testejava.exception.CustomRuntimeException;
 import com.example.testejava.model.UsuariosModel;
 import com.example.testejava.service.UsuariosServices;
 
@@ -32,8 +33,13 @@ public class UsuariosController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<UsuariosModel> newUser(@RequestBody UsuariosModel user) {
-        UsuariosModel newUser = usuariosServices.novoUsuario(user);
-        return ResponseEntity.ok(newUser);
+    public ResponseEntity<Object> newUser(@RequestBody UsuariosModel user) {
+    	try {
+    		usuariosServices.novoUsuario(user);
+    		return ResponseEntity.ok().build();
+        } catch (CustomRuntimeException ex) {
+        	CustomRuntimeException errorResponse = new CustomRuntimeException(ex.getErrorCode(), ex.getMessage(), ex.getHttpStatus());
+            return ResponseEntity.status(ex.getHttpStatus()).body(errorResponse);
+        }
     }
 }

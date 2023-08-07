@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -32,6 +33,9 @@ public class UsuariosModel {
     @Column(unique = true)
     private Integer rsUsuario;
 
+    @Transient
+    private Long idPessoa;
+    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idPessoa", referencedColumnName = "id", nullable = false)
     private PessoaCadastroModel pessoa;
@@ -111,6 +115,14 @@ public class UsuariosModel {
 
 	public void setRsUsuario(Integer rsUsuario) {
 		this.rsUsuario = rsUsuario;
+	}
+
+	public Long getIdPessoa() {
+		return idPessoa;
+	}
+
+	public void setIdPessoa(Long idPessoa) {
+		this.idPessoa = idPessoa;
 	}
 
 	public PessoaCadastroModel getPessoa() {
