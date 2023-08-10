@@ -96,4 +96,18 @@ public class PessoaCadastroServices {
         }
         return pessoaExistente.isPresent();
     }
+
+    public Optional<PessoaCadastroModel> verificaIdPessoaInformado (Long pessoaId) {
+    	if (pessoaId==null || pessoaId<1) {
+            throw new CustomRuntimeException("ID_PESSOA_NÃO_INFORMADO", "O ID Pessoa não foi informado", HttpStatus.BAD_REQUEST);
+    	}
+    	
+        Optional<PessoaCadastroModel> pessoa = buscarPessoaPorId(pessoaId);
+
+        if (!pessoa.isPresent()) {
+            throw new CustomRuntimeException("ID_PESSOA_INEXISTENTE", "O ID Pessoa informado não existe", HttpStatus.NOT_FOUND);
+        }
+        
+        return pessoa;
+    }
 }

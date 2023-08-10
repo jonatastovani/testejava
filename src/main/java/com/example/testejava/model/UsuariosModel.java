@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -27,12 +28,16 @@ public class UsuariosModel {
     @ColumnDefault("true")
     private Boolean status;
 
+    
+    @NotBlank(message = "O campo Nome de Usuário não pode ser nulo ou vazio!")
     @Column(nullable = false, unique = true)
     private String usuario;
 
+    @NotBlank(message = "O campo RS Usuário não pode ser nulo ou vazio!")
     @Column(unique = true)
     private Integer rsUsuario;
 
+    @NotBlank(message = "O ID Pessoa não pode ser nulo ou vazio!")
     @Transient
     private Long idPessoa;
     

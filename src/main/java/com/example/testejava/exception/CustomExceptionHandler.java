@@ -10,8 +10,8 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(CustomRuntimeException.class)
     public ResponseEntity<ErrorResponseImpl> handleCustomRuntimeException(CustomRuntimeException ex, WebRequest request) {
-        //ErrorResponseImpl errorResponse = new ErrorResponseImpl(ex.getErrorCode(), ex.getMessage(), ex.getHttpStatus().value());
-        ErrorResponseImpl errorResponse = new ErrorResponseImpl(ex.getMessage(), ex.getHttpStatus().value());
+        ErrorResponseImpl errorResponse = new ErrorResponseImpl(ex.getErrorCode(), ex.getMessage(), ex.getHttpStatus().value());
+        //ErrorResponseImpl errorResponse = new ErrorResponseImpl(ex.getMessage(), ex.getHttpStatus().value());
         return new ResponseEntity<>(errorResponse, ex.getHttpStatus());
     }
 }

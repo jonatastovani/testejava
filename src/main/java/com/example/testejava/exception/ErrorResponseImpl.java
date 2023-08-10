@@ -9,8 +9,8 @@ public class ErrorResponseImpl implements ErrorResponse {
     private String errorMessage;
     private int httpStatus;
 
-    public ErrorResponseImpl(String errorMessage, int httpStatus) {
-        //this.errorCode = errorCode;
+    public ErrorResponseImpl(String errorCode, String errorMessage, int httpStatus) {
+        this.errorCode = errorCode;
         this.errorMessage = errorMessage;
         this.httpStatus = httpStatus;
     }
