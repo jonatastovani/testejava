@@ -9,9 +9,8 @@ import org.springframework.web.context.request.WebRequest;
 public class CustomExceptionHandler {
 
     @ExceptionHandler(CustomRuntimeException.class)
-    public ResponseEntity<ErrorResponseImpl> handleCustomRuntimeException(CustomRuntimeException ex, WebRequest request) {
-        ErrorResponseImpl errorResponse = new ErrorResponseImpl(ex.getErrorCode(), ex.getMessage(), ex.getHttpStatus().value());
-        //ErrorResponseImpl errorResponse = new ErrorResponseImpl(ex.getMessage(), ex.getHttpStatus().value());
+    public ResponseEntity<ErrorResponse> handleCustomRuntimeException(CustomRuntimeException ex, WebRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(ex.getErrorCode(), ex.getHttpStatus(), ex.getMessage());
         return new ResponseEntity<>(errorResponse, ex.getHttpStatus());
     }
 }

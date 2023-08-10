@@ -29,8 +29,8 @@ public class UsuariosServices {
     	@SuppressWarnings("unused")
 		final Optional<UsuariosModel> usuarioIdConferencia = verificaIdCadastroInformado(usuario.getCadastroId());
     	
-    	@SuppressWarnings("unused")
-		final Boolean nomeUsuarioConferencia = verificaNomeUsuarioExistente(usuario.getUsuario());
+    	/*@SuppressWarnings("unused")
+		final Boolean nomeUsuarioConferencia = verificaNomeUsuarioExistente(usuario.getUsuario());*/
     	
 
     	
