@@ -7,6 +7,8 @@ import com.example.testejava.exception.CustomRuntimeException;
 import com.example.testejava.model.UsuariosModel;
 import com.example.testejava.service.UsuariosServices;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +35,7 @@ public class UsuariosController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Object> newUser(@RequestBody UsuariosModel user) {
+    public ResponseEntity<Object> newUser(@Valid @RequestBody UsuariosModel user) {
     	try {
     		usuariosServices.novoUsuario(user);
     		return ResponseEntity.ok().build();

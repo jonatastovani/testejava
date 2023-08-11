@@ -2,23 +2,19 @@ package com.example.testejava.exception;
 
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
+
 public class ErrorResponse {
-    private String cause = null;
     private String errorCode;
     private String httpStatus;
     private String message;
-    private String[] suppressed = null;
-    private String localizedMessage;
+    private List<String> errors;
 
-    public ErrorResponse(String errorCode, HttpStatus httpStatus, String message) {
+    public ErrorResponse(String errorCode, HttpStatus httpStatus, String message, List<String> errors) {
         this.errorCode = errorCode;
         this.httpStatus = httpStatus.toString();
         this.message = message;
-        this.localizedMessage = message;
-    }
-
-    public String getCause() {
-        return cause;
+        this.errors = errors;
     }
 
     public String getErrorCode() {
@@ -33,11 +29,7 @@ public class ErrorResponse {
         return message;
     }
 
-    public String[] getSuppressed() {
-        return suppressed;
-    }
-
-    public String getLocalizedMessage() {
-        return localizedMessage;
+    public List<String> getErrors() {
+        return errors;
     }
 }

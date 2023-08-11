@@ -1,10 +1,8 @@
 package com.example.testejava.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.example.testejava.exception.CustomRuntimeException;
 import com.example.testejava.model.CidadesModel;
 import com.example.testejava.model.EstadosModel;
 import com.example.testejava.model.NacionalidadesModel;
@@ -23,8 +21,6 @@ public class PessoaCadastroServices {
     PessoaCadastroRepository repository;
     
     @Autowired
-    UsuariosServices usuariosService;
-    @Autowired
     RGExpedidorService rgExpedidorService;
     @Autowired
     EstadosService estadosService;
@@ -32,6 +28,12 @@ public class PessoaCadastroServices {
     CidadesService cidadesService;
     @Autowired
     NacionalidadesService nacionalidadesService;
+
+    @Autowired
+    UsuariosVerificacoesService usuariosVerificacoesService;
+    
+    @Autowired
+    PessoaCadastroVerificacoesService pessoaVerificacoesService;
 
     public List<PessoaCadastroModel> buscarTodasPessoas() {
         return repository.findAll();
@@ -48,11 +50,11 @@ public class PessoaCadastroServices {
     public PessoaCadastroModel novaPessoa(PessoaCadastroModel novaPessoa) {
    	
         @SuppressWarnings("unused")
-		final Boolean cpfExistente = consultaCPFExistente(novaPessoa.getCpf());
+		final Boolean cpfExistente = pessoaVerificacoesService.consultaCPFExistente(novaPessoa.getCpf());
         
         Long cadastroId = novaPessoa.getCadastroId();
 
-		final Optional<UsuariosModel> confereCadastroId = usuariosService.verificaIdCadastroInformado(cadastroId);
+		final Optional<UsuariosModel> confereCadastroId = usuariosVerificacoesService.verificaIdCadastroInformado(cadastroId);
 
         Optional<RGExpedidorModel> rgExpedidor = rgExpedidorService.buscarRGExpedidorPorId(novaPessoa.getRgIdExpedidor());
         Optional<EstadosModel> rgEstado = estadosService.buscarEstadoPorId(novaPessoa.getRgIdEstado());
@@ -85,29 +87,4 @@ public class PessoaCadastroServices {
         return repository.save(novaPessoa);
     }
 
-    public Boolean consultaCPFExistente(String cpf) {
-    	if (cpf==null || cpf.isEmpty()) {
-            throw new CustomRuntimeException("CPF_NÃO_INFORMADO", "O CPF não foi informado.", HttpStatus.BAD_REQUEST);
-    	}
-
-        Optional<PessoaCadastroModel> pessoaExistente = buscarPessoaPorCpf(cpf);
-        if (pessoaExistente.isPresent()) {
-            throw new CustomRuntimeException("CPF_DUPLICADO", "O CPF informado já existe cadastrado.", HttpStatus.CONFLICT);
-        }
-        return pessoaExistente.isPresent();
-    }
-
-    public Optional<PessoaCadastroModel> verificaIdPessoaInformado (Long pessoaId) {
-    	if (pessoaId==null || pessoaId<1) {
-            throw new CustomRuntimeException("ID_PESSOA_NÃO_INFORMADO", "O ID Pessoa não foi informado", HttpStatus.BAD_REQUEST);
-    	}
-    	
-        Optional<PessoaCadastroModel> pessoa = buscarPessoaPorId(pessoaId);
-
-        if (!pessoa.isPresent()) {
-            throw new CustomRuntimeException("ID_PESSOA_INEXISTENTE", "O ID Pessoa informado não existe", HttpStatus.NOT_FOUND);
-        }
-        
-        return pessoa;
-    }
 }
