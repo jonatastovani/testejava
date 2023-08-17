@@ -1,4 +1,7 @@
-package com.example.testejava.service;
+package com.example.testejava.services;
+
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,15 +13,15 @@ import com.example.testejava.model.PessoaCadastroModel;
 import com.example.testejava.model.RGExpedidorModel;
 import com.example.testejava.model.UsuariosModel;
 import com.example.testejava.repository.PessoaCadastroRepository;
-
-import java.util.List;
-import java.util.Optional;
+import com.example.testejava.services.exceptions.DuplicatedRegisterException;
+import com.example.testejava.services.exceptions.EntityNotFoundException;
+import com.example.testejava.services.exceptions.IDNotFoundException;
 
 @Service
 public class PessoaCadastroServices {
 
     @Autowired
-    PessoaCadastroRepository repository;
+    PessoaCadastroRepository pessoaRepository;
     
     @Autowired
     RGExpedidorService rgExpedidorService;
@@ -28,33 +31,30 @@ public class PessoaCadastroServices {
     CidadesService cidadesService;
     @Autowired
     NacionalidadesService nacionalidadesService;
-
     @Autowired
-    UsuariosVerificacoesService usuariosVerificacoesService;
+    UsuariosServices usuariosServices;
     
-    @Autowired
-    PessoaCadastroVerificacoesService pessoaVerificacoesService;
-
-    public List<PessoaCadastroModel> buscarTodasPessoas() {
-        return repository.findAll();
+    public List<PessoaCadastroModel> findAll() {
+        return pessoaRepository.findAll();
     }
 
-    public Optional<PessoaCadastroModel> buscarPessoaPorId(Long id) {
-        return repository.findById(id);
+    public PessoaCadastroModel findById(Long id) {
+        return pessoaRepository.findById(id).orElseThrow(
+        		() -> new EntityNotFoundException("ID não encontrado " + id) );
     }
 
-    public Optional<PessoaCadastroModel> buscarPessoaPorCpf(String cpf) {
-        return repository.findByCpf(cpf);
+    public Optional<PessoaCadastroModel> findByCpf(String cpf) {
+        return pessoaRepository.findByCpf(cpf);
     }
 
     public PessoaCadastroModel novaPessoa(PessoaCadastroModel novaPessoa) {
    	
         @SuppressWarnings("unused")
-		final Boolean cpfExistente = pessoaVerificacoesService.consultaCPFExistente(novaPessoa.getCpf());
+		final Boolean cpfExistente = ExistingCpfInquiry(novaPessoa.getCpf());
         
         Long cadastroId = novaPessoa.getCadastroId();
 
-		final Optional<UsuariosModel> confereCadastroId = usuariosVerificacoesService.verificaIdCadastroInformado(cadastroId);
+		final UsuariosModel confereCadastroId = usuariosServices.checkInformedIdCadastro(cadastroId);
 
         Optional<RGExpedidorModel> rgExpedidor = rgExpedidorService.buscarRGExpedidorPorId(novaPessoa.getRgIdExpedidor());
         Optional<EstadosModel> rgEstado = estadosService.buscarEstadoPorId(novaPessoa.getRgIdEstado());
@@ -82,9 +82,30 @@ public class PessoaCadastroServices {
             novaPessoa.setNascNacionalidade(nascNacionalidade.get());
         }
 
-        novaPessoa.setCadastro(confereCadastroId.get());
+        novaPessoa.setCadastro(confereCadastroId);
 
-        return repository.save(novaPessoa);
+        return pessoaRepository.save(novaPessoa);
+    }
+    
+    public Boolean ExistingCpfInquiry(String cpf) {
+    	if (cpf==null || cpf.isEmpty()) {
+            new IDNotFoundException("O CPF não foi informado.");
+    	}
+
+        Optional<PessoaCadastroModel> pessoaExistente = findByCpf(cpf);
+        if (pessoaExistente.isPresent()) {
+            new DuplicatedRegisterException("O CPF informado já existe cadastrado.");
+        }
+        return pessoaExistente.isPresent();
+    }
+
+    public PessoaCadastroModel checkInformedIdPessoa (Long idPessoa) {
+    	if (idPessoa==null || idPessoa<1) {
+            new IDNotFoundException("O ID Pessoa não foi informado");
+    	}
+    	
+        PessoaCadastroModel pessoa = findById(idPessoa);
+        return pessoa;
     }
 
 }

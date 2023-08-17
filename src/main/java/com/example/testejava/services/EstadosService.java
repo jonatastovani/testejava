@@ -1,4 +1,4 @@
-package com.example.testejava.service;
+package com.example.testejava.services;
 
 import java.util.List;
 import java.util.Optional;

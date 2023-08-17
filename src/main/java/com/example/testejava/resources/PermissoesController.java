@@ -1,10 +1,10 @@
-package com.example.testejava.resource;
+package com.example.testejava.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.testejava.model.PermissoesModel;
-import com.example.testejava.service.PermissoesServices;
+import com.example.testejava.services.PermissoesServices;
 
 import java.util.List;
 import java.util.Optional;

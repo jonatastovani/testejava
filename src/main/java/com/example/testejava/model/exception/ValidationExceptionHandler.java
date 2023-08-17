@@ -1,4 +1,7 @@
-package com.example.testejava.exception;
+package com.example.testejava.model.exception;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,17 +10,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @ControllerAdvice
-public class CustomExceptionHandler {
-
-    @ExceptionHandler(CustomRuntimeException.class)
-    public ResponseEntity<ErrorResponse> handleCustomRuntimeException(CustomRuntimeException ex, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex.getErrorCode(), ex.getHttpStatus(), ex.getMessage(), null);
-        return new ResponseEntity<>(errorResponse, ex.getHttpStatus());
-    }
+public class ValidationExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex, WebRequest request) {

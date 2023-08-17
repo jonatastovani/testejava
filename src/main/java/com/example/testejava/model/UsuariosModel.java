@@ -1,22 +1,18 @@
 package com.example.testejava.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 import org.hibernate.annotations.ColumnDefault;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tab_usuarios")
@@ -38,13 +34,8 @@ public class UsuariosModel {
     private Integer rsUsuario;
 
     @NotNull(message = "O ID Pessoa não pode ser nulo ou vazio!")
-    @Transient
     private Long idPessoa;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idPessoa", referencedColumnName = "id", nullable = false)
-    private PessoaCadastroModel pessoa;
-
     @Column(unique = true)
     private String apelido;
 
@@ -128,14 +119,6 @@ public class UsuariosModel {
 
 	public void setIdPessoa(Long idPessoa) {
 		this.idPessoa = idPessoa;
-	}
-
-	public PessoaCadastroModel getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(PessoaCadastroModel pessoa) {
-		this.pessoa = pessoa;
 	}
 
 	public String getApelido() {
