@@ -54,7 +54,7 @@ public class PessoaCadastroServices {
         
         Long cadastroId = novaPessoa.getCadastroId();
 
-		final UsuariosModel confereCadastroId = usuariosServices.checkInformedIdCadastro(cadastroId);
+		final UsuariosModel confereCadastroId = usuariosServices.checkInformedCadastroId(cadastroId);
 
         Optional<RGExpedidorModel> rgExpedidor = rgExpedidorService.buscarRGExpedidorPorId(novaPessoa.getRgIdExpedidor());
         Optional<EstadosModel> rgEstado = estadosService.buscarEstadoPorId(novaPessoa.getRgIdEstado());

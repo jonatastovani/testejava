@@ -31,12 +31,12 @@ public class UsuariosModel {
 
     @NotNull(message = "O campo RS Usuário não pode ser nulo ou vazio!")
     @Column(unique = true)
-    private Integer rsUsuario;
+    private Long rsUsuario;
 
     @NotNull(message = "O ID Pessoa não pode ser nulo ou vazio!")
+    @Column(nullable = false, unique = true)
     private Long idPessoa;
     
-    @Column(unique = true)
     private String apelido;
 
     private Long idExibicao;
@@ -105,11 +105,11 @@ public class UsuariosModel {
 		this.usuario = usuario;
 	}
 
-	public Integer getRsUsuario() {
+	public Long getRsUsuario() {
 		return rsUsuario;
 	}
 
-	public void setRsUsuario(Integer rsUsuario) {
+	public void setRsUsuario(Long rsUsuario) {
 		this.rsUsuario = rsUsuario;
 	}
 

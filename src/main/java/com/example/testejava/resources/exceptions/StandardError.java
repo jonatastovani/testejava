@@ -2,6 +2,7 @@ package com.example.testejava.resources.exceptions;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 
 public class StandardError implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -11,7 +12,8 @@ public class StandardError implements Serializable{
 	private String error;
 	private String message;
 	private String path;
-	
+    private List<String> errors;
+
 	public StandardError () {
 	}
 
@@ -53,6 +55,14 @@ public class StandardError implements Serializable{
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public List<String> getErrors() {
+		return errors;
+	}
+
+	public void setErrors(List<String> errors) {
+		this.errors = errors;
 	}
 	
 }
