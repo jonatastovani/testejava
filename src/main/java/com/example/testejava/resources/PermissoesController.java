@@ -1,13 +1,15 @@
 package com.example.testejava.resources;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.testejava.model.PermissoesModel;
 import com.example.testejava.services.PermissoesServices;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/permissoes")
@@ -21,19 +23,8 @@ public class PermissoesController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PermissoesModel> fetchPessoaById(@PathVariable Long id) {
-        Optional<PermissoesModel> pessoa = service.fetchPermissaoById(id);
-
-        if (pessoa.isPresent()) {
-            return ResponseEntity.ok(pessoa.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PostMapping
-    public ResponseEntity<PermissoesModel> newUser(@RequestBody PermissoesModel user) {
-    	PermissoesModel newUser = service.newUser(user);
-        return ResponseEntity.ok(newUser);
+    public ResponseEntity<PermissoesModel> buscarPermissaoPorId(@PathVariable Long id) {
+        PermissoesModel pessoa = service.buscarPermissaoPorId(id);
+        return ResponseEntity.ok().body(pessoa);
     }
 }

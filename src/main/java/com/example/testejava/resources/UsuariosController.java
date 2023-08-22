@@ -41,7 +41,7 @@ public class UsuariosController {
     
     @PutMapping("/alterar/{id}")
     public ResponseEntity<UsuariosModel> alterarUsuario(@Valid @PathVariable Long id, @RequestBody UsuariosModel usuario){
-    	usuariosServices.alterarUsuario(id, usuario);
+    	usuariosServices.alterarCompletoUsuario(id, usuario);
     	return ResponseEntity.ok().body(usuario);
     }
     

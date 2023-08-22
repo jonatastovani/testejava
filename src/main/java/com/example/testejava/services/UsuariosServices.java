@@ -44,7 +44,7 @@ public class UsuariosServices {
     	return usuariosRepository.save(usuario);
     }
     
-    public UsuariosModel alterarUsuario (Long id, UsuariosModel usuario) {
+    public UsuariosModel alterarCompletoUsuario (Long id, UsuariosModel usuario) {
     	UsuariosModel usuarioExistente = buscarUsuariosPorId(id);
     	    	
     	@SuppressWarnings("unused")
@@ -58,57 +58,55 @@ public class UsuariosServices {
 
     	@SuppressWarnings("unused")
 		final Boolean idPessoaConferencia = verificaIdPessoaDuplicado(usuario.getIdPessoa(), id);
-
-    	if (usuario.getUsuario()!=usuarioExistente.getUsuario()) {
-    		usuarioExistente.setRsUsuario(usuario.getRsUsuario());
-    	}
-    	if (usuario.getStatus()!=usuarioExistente.getStatus()) {
-    		usuarioExistente.setStatus(usuario.getStatus());
-    	}
-    	if (usuario.getRsUsuario()!=usuarioExistente.getRsUsuario()) {
-    		usuarioExistente.setRsUsuario(usuario.getRsUsuario());
-    	}
-    	if (usuario.getIdPessoa()!=usuarioExistente.getIdPessoa()) {
-    		usuarioExistente.setIdPessoa(usuario.getIdPessoa());
-    	}
-    	if (usuario.getApelido()!=usuarioExistente.getApelido()) {
-    		usuarioExistente.setApelido(usuario.getApelido());
-    	}
-    	if (usuario.getIdExibicao()!=usuarioExistente.getIdExibicao()) {
-    		usuarioExistente.setIdExibicao(usuario.getIdExibicao());
-    	}
-    	if (usuario.getSenha()!=usuarioExistente.getSenha()) {
-    		usuarioExistente.setSenha(usuario.getSenha());
-    	}
-    	if (usuario.getIdTurno()!=usuarioExistente.getIdTurno()) {
-    		usuarioExistente.setIdTurno(usuario.getIdTurno());
-    	}
-    	if (usuario.getIdEscala()!=usuarioExistente.getIdEscala()) {
-    		usuarioExistente.setIdEscala(usuario.getIdEscala());
-    	}
-    	if (usuario.getContaBloqueada()!=usuarioExistente.getContaBloqueada()) {
-    		usuarioExistente.setContaBloqueada(usuario.getContaBloqueada());
-    	}
-    	if (usuario.getDataContaBloqueada()!=usuarioExistente.getDataContaBloqueada()) {
-    		usuarioExistente.setDataContaBloqueada(usuario.getDataContaBloqueada());
-    	}
+//
+//    	if (usuario.getUsuario()!=usuarioExistente.getUsuario()) {
+//    		usuarioExistente.setRsUsuario(usuario.getRsUsuario());
+//    	}
+//    	if (usuario.getStatus()!=usuarioExistente.getStatus()) {
+//    		usuarioExistente.setStatus(usuario.getStatus());
+//    	}
+//    	if (usuario.getRsUsuario()!=usuarioExistente.getRsUsuario()) {
+//    		usuarioExistente.setRsUsuario(usuario.getRsUsuario());
+//    	}
+//    	if (usuario.getIdPessoa()!=usuarioExistente.getIdPessoa()) {
+//    		usuarioExistente.setIdPessoa(usuario.getIdPessoa());
+//    	}
+//    	if (usuario.getApelido()!=usuarioExistente.getApelido()) {
+//    		usuarioExistente.setApelido(usuario.getApelido());
+//    	}
+//    	if (usuario.getIdExibicao()!=usuarioExistente.getIdExibicao()) {
+//    		usuarioExistente.setIdExibicao(usuario.getIdExibicao());
+//    	}
+//    	if (usuario.getSenha()!=usuarioExistente.getSenha()) {
+//    		usuarioExistente.setSenha(usuario.getSenha());
+//    	}
+//    	if (usuario.getIdTurno()!=usuarioExistente.getIdTurno()) {
+//    		usuarioExistente.setIdTurno(usuario.getIdTurno());
+//    	}
+//    	if (usuario.getIdEscala()!=usuarioExistente.getIdEscala()) {
+//    		usuarioExistente.setIdEscala(usuario.getIdEscala());
+//    	}
+//    	if (usuario.getContaBloqueada()!=usuarioExistente.getContaBloqueada()) {
+//    		usuarioExistente.setContaBloqueada(usuario.getContaBloqueada());
+//    	}
+//    	if (usuario.getDataContaBloqueada()!=usuarioExistente.getDataContaBloqueada()) {
+//    		usuarioExistente.setDataContaBloqueada(usuario.getDataContaBloqueada());
+//    	}
     	if (usuario.getAtualizacaoData()==null) {
-    		usuarioExistente.setAtualizacaoData(LocalDateTime.now());
-    	} else {
-        	usuarioExistente.setAtualizacaoData(usuario.getAtualizacaoData());
+    		usuario.setAtualizacaoData(LocalDateTime.now());
     	}
     	
-    	usuarioExistente.setAtualizacaoIp(usuario.getAtualizacaoIp());
-    	usuarioExistente.setAtualizacaoId(usuario.getAtualizacaoId());
-    	
-    	usuariosRepository.save(usuarioExistente);
-    	
-    	return usuarioExistente;
+    	usuario.setId(usuarioExistente.getId());
+    	usuario.setCadastroId(usuarioExistente.getCadastroId());
+    	usuario.setCadastroIp(usuarioExistente.getCadastroIp());
+    	usuario.setCadastroData(usuarioExistente.getCadastroData());
+
+    	return usuariosRepository.save(usuario);
     };
-    
+
     public UsuariosModel verificaCadastroId (Long usuarioId) {
     	if (usuarioId==null || usuarioId<1) {
-    		throw new IDNotFoundException("ID do usuário que está cadastrando os dados não foi informado. Saia e logue novamente com seu usuário.");
+    		throw new IDNotFoundException("ID do usuário que está cadastrando os dados não foi informado. Efetue o login novamente.");
     	}
     	
         UsuariosModel register = buscarUsuariosPorId(usuarioId);
@@ -121,13 +119,13 @@ public class UsuariosServices {
     		throw new IDNotFoundException("O Nome de Usuário não foi informado.");
 		}
 
-        Optional<UsuariosModel> existingUser = usuariosRepository.findByUsuario(usuario);
-        if (existingUser.isPresent()) {
-        	if (idExistente==null || idExistente!=null && idExistente!=existingUser.get().getId()) {
+        Optional<UsuariosModel> pessoaExistente = usuariosRepository.findByUsuario(usuario);
+        if (pessoaExistente.isPresent()) {
+        	if (idExistente==null || idExistente!=null && idExistente!=pessoaExistente.get().getId()) {
             	throw new DuplicatedRegisterException("O Nome de Usuário '" + usuario + "' já existe cadastrado.");
         	}
         }
-        return existingUser.isPresent();
+        return pessoaExistente.isPresent();
     }
     
     public Boolean verificaRsUsuarioDuplicado (Long rsUsuario, Long idExistente) {
@@ -135,13 +133,13 @@ public class UsuariosServices {
     		throw new IDNotFoundException("O RS do Usuário não foi informado.");
     	}
 
-        Optional<UsuariosModel> existingUser = usuariosRepository.findByRsUsuario(rsUsuario);
-        if (existingUser.isPresent()) {
-        	if (idExistente==null || idExistente!=null && idExistente!=existingUser.get().getId()) {
+        Optional<UsuariosModel> pessoaExistente = usuariosRepository.findByRsUsuario(rsUsuario);
+        if (pessoaExistente.isPresent()) {
+        	if (idExistente==null || idExistente!=null && idExistente!=pessoaExistente.get().getId()) {
         		throw new DuplicatedRegisterException("O RS de Usuário '" + rsUsuario + "' já existe cadastrado.");
         	}
         }
-        return existingUser.isPresent();
+        return pessoaExistente.isPresent();
     }
     
     public Boolean verificaIdPessoaDuplicado (Long idPessoa, Long idExistente) {
@@ -149,14 +147,14 @@ public class UsuariosServices {
     		throw new IDNotFoundException("O ID Pessoa do Usuário não foi informado.");
     	}
 
-        Optional<UsuariosModel> existingUser = usuariosRepository.findByIdPessoa(idPessoa);
-        if (existingUser.isPresent()) {
-        	if (idExistente==null || idExistente!=null && idExistente!=existingUser.get().getId()) {
+        Optional<UsuariosModel> pessoaExistente = usuariosRepository.findByIdPessoa(idPessoa);
+        if (pessoaExistente.isPresent()) {
+        	if (idExistente==null || idExistente!=null && idExistente!=pessoaExistente.get().getId()) {
         		throw new DuplicatedRegisterException("O ID Pessoa '" + idPessoa + "' já existe vinculado a outro Usuário. "
-        			+ "Usuário: " + existingUser.get().getUsuario());
+        			+ "Usuário: " + pessoaExistente.get().getUsuario());
         	}
         }
-        return existingUser.isPresent();
+        return pessoaExistente.isPresent();
     }
     
 }

@@ -27,8 +27,6 @@ public class PermissoesModel {
     @Column(nullable = false)
     private String descricao;
 
-    //@ManyToOne(fetch = FetchType.EAGER)
-    //@JoinColumn(name = "idTurno", referencedColumnName = "id")
     private Long idTurno;
 
     @Column(nullable = false)

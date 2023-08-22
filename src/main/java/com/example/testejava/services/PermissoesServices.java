@@ -1,12 +1,12 @@
 package com.example.testejava.services;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.testejava.model.PermissoesModel;
 import com.example.testejava.repository.PermissoesRepository;
-
-import java.util.List;
-import java.util.Optional;
+import com.example.testejava.services.exceptions.EntityNotFoundException;
 
 @Service
 public class PermissoesServices {
@@ -18,11 +18,9 @@ public class PermissoesServices {
         return repository.findAll();
     }
 
-    public Optional<PermissoesModel> fetchPermissaoById(Long id) {
-        return repository.findById(id);
+    public PermissoesModel buscarPermissaoPorId(Long id) {
+        return repository.findById(id).orElseThrow(
+        		() -> new EntityNotFoundException("A Permissão com ID '"+ id + "' não existe.") );
     }
 
-    public PermissoesModel newUser(PermissoesModel user) {
-        return repository.save(user);
-    }
 }

@@ -1,13 +1,13 @@
 package com.example.testejava.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.testejava.model.EstadosModel;
 import com.example.testejava.repository.EstadosRepository;
+import com.example.testejava.services.exceptions.EntityNotFoundException;
 
 @Service
 public class EstadosService {
@@ -19,8 +19,9 @@ public class EstadosService {
         return repository.findAll();
     }
 
-    public Optional<EstadosModel> buscarEstadoPorId(Long id) {
-        return repository.findById(id);
+    public EstadosModel buscarEstadoPorId(Long id) {
+        return repository.findById(id).orElseThrow(
+        		() -> new EntityNotFoundException("O Estado com ID '"+ id + "' não existe.") );
     }
 
 }
