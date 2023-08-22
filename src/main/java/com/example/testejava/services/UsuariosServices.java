@@ -1,4 +1,5 @@
 package com.example.testejava.services;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +22,7 @@ public class UsuariosServices {
         return usuariosRepository.findAll();
     }
 
-    public UsuariosModel findById(Long id) {
+    public UsuariosModel buscarUsuariosPorId(Long id) {
         return usuariosRepository.findById(id).orElseThrow(
         		() -> new EntityNotFoundException("O usuário de cadastro com ID '"+ id + "' não existe.") );
     }
@@ -29,51 +30,93 @@ public class UsuariosServices {
     public UsuariosModel novoUsuario(UsuariosModel usuario) {
     	
     	@SuppressWarnings("unused")
-		final UsuariosModel usuarioIdConferencia = checkInformedCadastroId(usuario.getCadastroId());
+		final UsuariosModel usuarioIdConferencia = verificaCadastroId(usuario.getCadastroId());
     	
     	@SuppressWarnings("unused")
-		final Boolean nomeUsuarioConferencia = checkInformedDuplicatedUsuario(usuario.getUsuario(), null);
+		final Boolean nomeUsuarioConferencia = verificaUsuarioDuplicado(usuario.getUsuario(), null);
 
     	@SuppressWarnings("unused")
-		final Boolean rsUsuarioConferencia = checkInformedDuplicatedRsUsuario(usuario.getRsUsuario(), null);
+		final Boolean rsUsuarioConferencia = verificaRsUsuarioDuplicado(usuario.getRsUsuario(), null);
 
     	@SuppressWarnings("unused")
-		final Boolean idPessoaConferencia = checkInformedDuplicatedIdPessoa(usuario.getIdPessoa(), null);
+		final Boolean idPessoaConferencia = verificaIdPessoaDuplicado(usuario.getIdPessoa(), null);
 
     	return usuariosRepository.save(usuario);
     }
     
     public UsuariosModel alterarUsuario (Long id, UsuariosModel usuario) {
-    	UsuariosModel usuarioExistente = findById(id);
-    	
-    	usuario.setId(id);
+    	UsuariosModel usuarioExistente = buscarUsuariosPorId(id);
+    	    	
+    	@SuppressWarnings("unused")
+		final UsuariosModel usuarioIdConferencia = verificaCadastroId(usuario.getAtualizacaoId());
     	
     	@SuppressWarnings("unused")
-		final Boolean nomeUsuarioConferencia = checkInformedDuplicatedUsuario(usuario.getUsuario(), id);
+		final Boolean nomeUsuarioConferencia = verificaUsuarioDuplicado(usuario.getUsuario(), id);
 
     	@SuppressWarnings("unused")
-		final Boolean rsUsuarioConferencia = checkInformedDuplicatedRsUsuario(usuario.getRsUsuario(), id);
+		final Boolean rsUsuarioConferencia = verificaRsUsuarioDuplicado(usuario.getRsUsuario(), id);
 
     	@SuppressWarnings("unused")
-		final Boolean idPessoaConferencia = checkInformedDuplicatedIdPessoa(usuario.getIdPessoa(), id);
+		final Boolean idPessoaConferencia = verificaIdPessoaDuplicado(usuario.getIdPessoa(), id);
 
-    	
-    	//Tem que alterar sem mudar os registros que não foram enviados
-    	
-    	return usuariosRepository.save(usuarioExistente);
-    };
-    
-    public UsuariosModel checkInformedCadastroId (Long usuarioId) {
-    	if (usuarioId==null || usuarioId<1) {
-    		throw new IDNotFoundException("ID do usuário de cadastro não foi informado");
+    	if (usuario.getUsuario()!=usuarioExistente.getUsuario()) {
+    		usuarioExistente.setRsUsuario(usuario.getRsUsuario());
+    	}
+    	if (usuario.getStatus()!=usuarioExistente.getStatus()) {
+    		usuarioExistente.setStatus(usuario.getStatus());
+    	}
+    	if (usuario.getRsUsuario()!=usuarioExistente.getRsUsuario()) {
+    		usuarioExistente.setRsUsuario(usuario.getRsUsuario());
+    	}
+    	if (usuario.getIdPessoa()!=usuarioExistente.getIdPessoa()) {
+    		usuarioExistente.setIdPessoa(usuario.getIdPessoa());
+    	}
+    	if (usuario.getApelido()!=usuarioExistente.getApelido()) {
+    		usuarioExistente.setApelido(usuario.getApelido());
+    	}
+    	if (usuario.getIdExibicao()!=usuarioExistente.getIdExibicao()) {
+    		usuarioExistente.setIdExibicao(usuario.getIdExibicao());
+    	}
+    	if (usuario.getSenha()!=usuarioExistente.getSenha()) {
+    		usuarioExistente.setSenha(usuario.getSenha());
+    	}
+    	if (usuario.getIdTurno()!=usuarioExistente.getIdTurno()) {
+    		usuarioExistente.setIdTurno(usuario.getIdTurno());
+    	}
+    	if (usuario.getIdEscala()!=usuarioExistente.getIdEscala()) {
+    		usuarioExistente.setIdEscala(usuario.getIdEscala());
+    	}
+    	if (usuario.getContaBloqueada()!=usuarioExistente.getContaBloqueada()) {
+    		usuarioExistente.setContaBloqueada(usuario.getContaBloqueada());
+    	}
+    	if (usuario.getDataContaBloqueada()!=usuarioExistente.getDataContaBloqueada()) {
+    		usuarioExistente.setDataContaBloqueada(usuario.getDataContaBloqueada());
+    	}
+    	if (usuario.getAtualizacaoData()==null) {
+    		usuarioExistente.setAtualizacaoData(LocalDateTime.now());
+    	} else {
+        	usuarioExistente.setAtualizacaoData(usuario.getAtualizacaoData());
     	}
     	
-        UsuariosModel register = findById(usuarioId);
+    	usuarioExistente.setAtualizacaoIp(usuario.getAtualizacaoIp());
+    	usuarioExistente.setAtualizacaoId(usuario.getAtualizacaoId());
+    	
+    	usuariosRepository.save(usuarioExistente);
+    	
+    	return usuarioExistente;
+    };
+    
+    public UsuariosModel verificaCadastroId (Long usuarioId) {
+    	if (usuarioId==null || usuarioId<1) {
+    		throw new IDNotFoundException("ID do usuário que está cadastrando os dados não foi informado. Saia e logue novamente com seu usuário.");
+    	}
+    	
+        UsuariosModel register = buscarUsuariosPorId(usuarioId);
 
         return register;
     }
     
-    public Boolean checkInformedDuplicatedUsuario (String usuario, Long idExistente) {
+    public Boolean verificaUsuarioDuplicado (String usuario, Long idExistente) {
     	if (usuario==null || usuario.isEmpty()) {
     		throw new IDNotFoundException("O Nome de Usuário não foi informado.");
 		}
@@ -87,7 +130,7 @@ public class UsuariosServices {
         return existingUser.isPresent();
     }
     
-    public Boolean checkInformedDuplicatedRsUsuario (Long rsUsuario, Long idExistente) {
+    public Boolean verificaRsUsuarioDuplicado (Long rsUsuario, Long idExistente) {
     	if (rsUsuario==null) {
     		throw new IDNotFoundException("O RS do Usuário não foi informado.");
     	}
@@ -101,7 +144,7 @@ public class UsuariosServices {
         return existingUser.isPresent();
     }
     
-    public Boolean checkInformedDuplicatedIdPessoa (Long idPessoa, Long idExistente) {
+    public Boolean verificaIdPessoaDuplicado (Long idPessoa, Long idExistente) {
     	if (idPessoa==null) {
     		throw new IDNotFoundException("O ID Pessoa do Usuário não foi informado.");
     	}

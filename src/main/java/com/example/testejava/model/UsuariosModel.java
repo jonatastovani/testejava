@@ -7,10 +7,14 @@ import org.hibernate.annotations.ColumnDefault;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -43,8 +47,13 @@ public class UsuariosModel {
 
     private String senha;
 
+	@Transient
     private Long idTurno;
-
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idTurno", referencedColumnName = "id")
+    private TurnosModel turno;
+    
     private Long idEscala;
 
     @Column(nullable = false)
@@ -52,12 +61,6 @@ public class UsuariosModel {
     private Boolean contaBloqueada;
 
     private LocalDateTime dataContaBloqueada;
-
-    @Column(nullable = false)
-    @ColumnDefault("false")
-    private Boolean contaExcluida;
-
-    private LocalDateTime dataContaExcluida;
 
     private Long cadastroId;
 
@@ -73,13 +76,6 @@ public class UsuariosModel {
     private String atualizacaoIp;
 
     private LocalDateTime atualizacaoData;
-
-    private Long exclusoregistroId;
-
-    @Column(length = 15)
-    private String exclusoregistroIp;
-
-    private LocalDateTime exclusoregistroData;
 
 	public Long getId() {
 		return id;
@@ -153,6 +149,14 @@ public class UsuariosModel {
 		this.idTurno = idTurno;
 	}
 
+    public TurnosModel getTurno() {
+		return turno;
+	}
+
+	public void setTurno(TurnosModel turno) {
+		this.turno = turno;
+	}
+
 	public Long getIdEscala() {
 		return idEscala;
 	}
@@ -175,22 +179,6 @@ public class UsuariosModel {
 
 	public void setDataContaBloqueada(LocalDateTime dataContaBloqueada) {
 		this.dataContaBloqueada = dataContaBloqueada;
-	}
-
-	public Boolean getContaExcluida() {
-		return contaExcluida;
-	}
-
-	public void setContaExcluida(Boolean contaExcluida) {
-		this.contaExcluida = contaExcluida;
-	}
-
-	public LocalDateTime getDataContaExcluida() {
-		return dataContaExcluida;
-	}
-
-	public void setDataContaExcluida(LocalDateTime dataContaExcluida) {
-		this.dataContaExcluida = dataContaExcluida;
 	}
 
 	public Long getCadastroId() {
@@ -239,30 +227,6 @@ public class UsuariosModel {
 
 	public void setAtualizacaoData(LocalDateTime atualizacaoData) {
 		this.atualizacaoData = atualizacaoData;
-	}
-
-	public Long getExclusoregistroId() {
-		return exclusoregistroId;
-	}
-
-	public void setExclusoregistroId(Long exclusoregistroId) {
-		this.exclusoregistroId = exclusoregistroId;
-	}
-
-	public String getExclusoregistroIp() {
-		return exclusoregistroIp;
-	}
-
-	public void setExclusoregistroIp(String exclusoregistroIp) {
-		this.exclusoregistroIp = exclusoregistroIp;
-	}
-
-	public LocalDateTime getExclusoregistroData() {
-		return exclusoregistroData;
-	}
-
-	public void setExclusoregistroData(LocalDateTime exclusoregistroData) {
-		this.exclusoregistroData = exclusoregistroData;
 	}
 
 	@Override

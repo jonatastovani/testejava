@@ -23,13 +23,13 @@ public class UsuariosController {
     UsuariosServices usuariosServices;
 
     @GetMapping
-    public List<UsuariosModel> listUsers() {
+    public List<UsuariosModel> listarUsuarios() {
         return usuariosServices.listarUsuarios();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuariosModel> fetchUserById(@PathVariable Long id) {
-        UsuariosModel user = usuariosServices.findById(id);
+    public ResponseEntity<UsuariosModel> buscarUsuariosPorId(@PathVariable Long id) {
+        UsuariosModel user = usuariosServices.buscarUsuariosPorId(id);
         return ResponseEntity.ok().body(user);
     }
 
