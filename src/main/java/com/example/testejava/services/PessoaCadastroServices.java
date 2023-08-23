@@ -78,10 +78,12 @@ public class PessoaCadastroServices {
     	}
     	
     	pessoa.setId(pessoaExistente.getId());
-    	pessoa.setCadastroId(pessoaExistente.getCadastroId());
+    	pessoa.setCadastroId(pessoaExistente.getCadastro().getId());
     	pessoa.setCadastroIp(pessoaExistente.getCadastroIp());
     	pessoa.setCadastroData(pessoaExistente.getCadastroData());
-        
+
+    	pessoa = setCompletoPropriedadesPessoa(pessoa);
+
         return pessoaRepository.save(pessoa);
     }
     
@@ -166,14 +168,14 @@ public class PessoaCadastroServices {
 
         return true;
     }
-
-    public PessoaCadastroModel verificaIdPessoa (Long idPessoa) {
-    	if (idPessoa==null || idPessoa<1) {
-            new IDNotFoundException("O ID Pessoa não foi informado");
-    	}
-    	
-        PessoaCadastroModel pessoa = buscarPessoaPorId(idPessoa);
-        return pessoa;
-    }
+//
+//    public PessoaCadastroModel verificaIdPessoa (Long idPessoa) {
+//    	if (idPessoa==null || idPessoa<1) {
+//            new IDNotFoundException("O ID Pessoa não foi informado");
+//    	}
+//    	
+//        PessoaCadastroModel pessoa = buscarPessoaPorId(idPessoa);
+//        return pessoa;
+//    }
 
 }

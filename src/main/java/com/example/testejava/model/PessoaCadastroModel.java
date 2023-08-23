@@ -104,7 +104,7 @@ public class PessoaCadastroModel {
     private Long cadastroId;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cadastroId", referencedColumnName = "id")
+    @JoinColumn(name = "cadastroId", referencedColumnName = "id", nullable = false)
     private UsuariosModel cadastro;
 
     @Column(length = 15)
