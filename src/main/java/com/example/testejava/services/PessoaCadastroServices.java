@@ -89,9 +89,30 @@ public class PessoaCadastroServices {
     	if (pessoa.getRgIdEstado()!=null) {
     		pessoa.setRgEstado(estadosService.buscarEstadoPorId(pessoa.getRgIdEstado()));
     	}
-		
-    	Colocar o restante aqui
-    	
+		if (pessoa.getRgIdExpedidor()!=null) {
+    		pessoa.setRgExpedidor(rgExpedidorService.buscarRGExpedidorPorId(pessoa.getRgIdExpedidor()));
+    	}
+		if (pessoa.getNascIdCidade()!=null) {
+    		pessoa.setNascCidade(cidadesService.buscarCidadePorId(pessoa.getNascIdCidade()));
+    	}
+		if (pessoa.getNascIdEstado()!=null) {
+    		pessoa.setNascEstado(estadosService.buscarEstadoPorId(pessoa.getNascIdEstado()));
+    	}
+		if (pessoa.getNascIdNacionalidade()!=null) {
+    		pessoa.setNascNacionalidade(nacionalidadesService.buscarNacionalidadePorId(pessoa.getNascIdNacionalidade()));
+    	}
+		if (pessoa.getEndIdCidadeMorad()!=null) {
+    		pessoa.setEndCidadeMorad(cidadesService.buscarCidadePorId(pessoa.getEndIdCidadeMorad()));
+    	}
+		if (pessoa.getEndIdEstadoMorad()!=null) {
+    		pessoa.setEndEstadoMorad(estadosService.buscarEstadoPorId(pessoa.getEndIdEstadoMorad()));
+    	}
+		if (pessoa.getCadastroId()!=null) {
+    		pessoa.setCadastro(usuariosServices.buscarUsuariosPorId(pessoa.getCadastroId()));
+    	}
+		if (pessoa.getAtualizacaoId()!=null) {
+    		pessoa.setAtualizacao(usuariosServices.buscarUsuariosPorId(pessoa.getAtualizacaoId()));
+    	}
     	
     	return pessoa;
 	}
